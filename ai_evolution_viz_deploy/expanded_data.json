@@ -1,0 +1,1157 @@
+{
+  "companies": [
+    {
+      "id": 1,
+      "name": "OpenAI",
+      "website": "https://openai.com",
+      "description": "AI research and deployment company focused on ensuring artificial general intelligence benefits all of humanity."
+    },
+    {
+      "id": 2,
+      "name": "Anthropic",
+      "website": "https://anthropic.com",
+      "description": "AI safety company working to build reliable, interpretable, and steerable AI systems."
+    },
+    {
+      "id": 3,
+      "name": "Google DeepMind",
+      "website": "https://deepmind.google",
+      "description": "Google's AI research laboratory focused on developing artificial general intelligence."
+    },
+    {
+      "id": 4,
+      "name": "Meta AI",
+      "website": "https://ai.meta.com",
+      "description": "Meta's AI research division focused on advancing the state of the art in artificial intelligence."
+    },
+    {
+      "id": 5,
+      "name": "Microsoft",
+      "website": "https://microsoft.com",
+      "description": "Technology company developing AI models and integrating AI into its products and services."
+    },
+    {
+      "id": 6,
+      "name": "xAI",
+      "website": "https://x.ai",
+      "description": "AI company founded by Elon Musk focused on understanding the true nature of the universe."
+    },
+    {
+      "id": 7,
+      "name": "Kuaishou",
+      "website": "https://www.kuaishou.com",
+      "description": "Chinese technology company that developed the Kling AI video generation model."
+    },
+    {
+      "id": 8,
+      "name": "Ideogram AI",
+      "website": "https://ideogram.ai",
+      "description": "Company focused on text-to-image generation with superior text rendering capabilities."
+    },
+    {
+      "id": 9,
+      "name": "Cursor",
+      "website": "https://cursor.com",
+      "description": "Company developing an AI-powered code editor to make software development more efficient."
+    },
+    {
+      "id": 10,
+      "name": "Mistral AI",
+      "website": "https://mistral.ai",
+      "description": "French AI company developing large language models and AI assistants."
+    },
+    {
+      "id": 11,
+      "name": "DeepSeek",
+      "website": "https://deepseek.com",
+      "description": "AI company developing open-source language models and AI assistants."
+    },
+    {
+      "id": 12,
+      "name": "Alibaba Cloud",
+      "website": "https://www.alibabacloud.com",
+      "description": "Chinese technology company developing the Qwen family of AI models."
+    },
+    {
+      "id": 13,
+      "name": "Midjourney",
+      "website": "https://www.midjourney.com",
+      "description": "Company developing AI image generation technology."
+    },
+    {
+      "id": 14,
+      "name": "Leonardo AI",
+      "website": "https://leonardo.ai",
+      "description": "Company developing AI image generation tools, acquired by Canva in July 2024."
+    },
+    {
+      "id": 15,
+      "name": "Butterfly Effect",
+      "website": "https://manus.ai",
+      "description": "Company behind the Manus AI general agent, also known as the Monica team."
+    },
+    {
+      "id": 16,
+      "name": "Lovable",
+      "website": "https://lovable.dev",
+      "description": "Company developing an AI-powered product engineering assistant."
+    },
+    {
+      "id": 17,
+      "name": "StackBlitz",
+      "website": "https://stackblitz.com",
+      "description": "Company behind Bolt.new, an AI-powered web development agent."
+    },
+    {
+      "id": 18,
+      "name": "Google Labs",
+      "website": "https://labs.google",
+      "description": "Google's experimental products division that developed Notebook LM."
+    },
+    {
+      "id": 19,
+      "name": "Perplexity",
+      "website": "https://www.perplexity.ai",
+      "description": "Company developing an AI-powered answer engine and research assistant."
+    },
+    {
+      "id": 20,
+      "name": "Stability AI",
+      "website": "https://stability.ai",
+      "description": "Company developing Stable Diffusion and other open-source AI models."
+    },
+    {
+      "id": 21,
+      "name": "Manus Team",
+      "website": "https://manus.ai",
+      "description": "Team developing Manus, an AI agent for various tasks and applications."
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Language Models",
+      "description": "AI models focused on natural language processing and generation."
+    },
+    {
+      "id": 2,
+      "name": "Image Generation",
+      "description": "AI models that create images from text descriptions or other inputs."
+    },
+    {
+      "id": 3,
+      "name": "Video Generation",
+      "description": "AI models that create videos from text descriptions or images."
+    },
+    {
+      "id": 4,
+      "name": "Code Generation",
+      "description": "AI models or tools specialized in generating or assisting with code."
+    },
+    {
+      "id": 5,
+      "name": "Multimodal Models",
+      "description": "AI models that can process and generate multiple types of data (text, images, audio, etc.)."
+    },
+    {
+      "id": 6,
+      "name": "AI Assistants",
+      "description": "AI models designed to assist with various tasks through conversation."
+    },
+    {
+      "id": 7,
+      "name": "Research Tools",
+      "description": "AI-powered tools designed for research, note-taking, and information analysis."
+    },
+    {
+      "id": 8,
+      "name": "Development Tools",
+      "description": "AI-powered tools designed for software and application development."
+    },
+    {
+      "id": 9,
+      "name": "AI Agents",
+      "description": "Autonomous AI systems that can perform tasks with minimal human intervention."
+    }
+  ],
+  "models": [
+    {
+      "id": 1,
+      "name": "GPT",
+      "company_id": 1,
+      "category_id": 1,
+      "description": "Generative Pre-trained Transformer, a family of large language models developed by OpenAI.",
+      "is_specialized": false,
+      "initial_release_date": "2018-06-11"
+    },
+    {
+      "id": 2,
+      "name": "Claude",
+      "company_id": 2,
+      "category_id": 1,
+      "description": "A family of large language models developed by Anthropic, designed to be helpful, harmless, and honest.",
+      "is_specialized": false,
+      "initial_release_date": "2023-03-14"
+    },
+    {
+      "id": 3,
+      "name": "Gemini",
+      "company_id": 3,
+      "category_id": 5,
+      "description": "A family of multimodal AI models developed by Google DeepMind.",
+      "is_specialized": false,
+      "initial_release_date": "2023-12-06"
+    },
+    {
+      "id": 4,
+      "name": "Llama",
+      "company_id": 4,
+      "category_id": 1,
+      "description": "A family of open-source large language models developed by Meta AI.",
+      "is_specialized": false,
+      "initial_release_date": "2023-02-24"
+    },
+    {
+      "id": 5,
+      "name": "Phi",
+      "company_id": 5,
+      "category_id": 1,
+      "description": "A family of small language models developed by Microsoft Research.",
+      "is_specialized": false,
+      "initial_release_date": "2023-06-22"
+    },
+    {
+      "id": 6,
+      "name": "Grok",
+      "company_id": 6,
+      "category_id": 1,
+      "description": "A family of large language models developed by xAI.",
+      "is_specialized": false,
+      "initial_release_date": "2023-11-04"
+    },
+    {
+      "id": 7,
+      "name": "Kling",
+      "company_id": 7,
+      "category_id": 3,
+      "description": "An AI video generation model developed by Kuaishou.",
+      "is_specialized": true,
+      "initial_release_date": "2024-06-10"
+    },
+    {
+      "id": 8,
+      "name": "Ideogram",
+      "company_id": 8,
+      "category_id": 2,
+      "description": "An AI image generation model with superior text rendering capabilities.",
+      "is_specialized": true,
+      "initial_release_date": "2023-08-22"
+    },
+    {
+      "id": 9,
+      "name": "Cursor",
+      "company_id": 9,
+      "category_id": 4,
+      "description": "An AI-powered code editor built on Visual Studio Code.",
+      "is_specialized": true,
+      "initial_release_date": "2023-01-01"
+    },
+    {
+      "id": 10,
+      "name": "Sora",
+      "company_id": 1,
+      "category_id": 3,
+      "description": "A text-to-video model developed by OpenAI.",
+      "is_specialized": true,
+      "initial_release_date": "2024-02-15"
+    },
+    {
+      "id": 11,
+      "name": "Mistral",
+      "company_id": 10,
+      "category_id": 1,
+      "description": "A family of large language models developed by Mistral AI.",
+      "is_specialized": false,
+      "initial_release_date": "2023-09-27"
+    },
+    {
+      "id": 12,
+      "name": "Le Chat",
+      "company_id": 10,
+      "category_id": 6,
+      "description": "An AI assistant developed by Mistral AI, powered by their language models.",
+      "is_specialized": false,
+      "initial_release_date": "2024-02-26"
+    },
+    {
+      "id": 13,
+      "name": "DeepSeek",
+      "company_id": 11,
+      "category_id": 1,
+      "description": "A family of large language models developed by DeepSeek.",
+      "is_specialized": false,
+      "initial_release_date": "2023-11-02"
+    },
+    {
+      "id": 14,
+      "name": "DeepSeek Coder",
+      "company_id": 11,
+      "category_id": 4,
+      "description": "A code-focused model developed by DeepSeek.",
+      "is_specialized": true,
+      "initial_release_date": "2023-11-02"
+    },
+    {
+      "id": 15,
+      "name": "Qwen",
+      "company_id": 12,
+      "category_id": 1,
+      "description": "A family of large language models developed by Alibaba Cloud.",
+      "is_specialized": false,
+      "initial_release_date": "2023-08-21"
+    },
+    {
+      "id": 16,
+      "name": "Midjourney",
+      "company_id": 13,
+      "category_id": 2,
+      "description": "An AI image generation model developed by Midjourney.",
+      "is_specialized": true,
+      "initial_release_date": "2022-02-01"
+    },
+    {
+      "id": 17,
+      "name": "Leonardo",
+      "company_id": 14,
+      "category_id": 2,
+      "description": "An AI image generation platform developed by Leonardo AI.",
+      "is_specialized": true,
+      "initial_release_date": "2022-12-01"
+    },
+    {
+      "id": 18,
+      "name": "Manus",
+      "company_id": 15,
+      "category_id": 9,
+      "description": "A general AI agent developed by Butterfly Effect/Monica team.",
+      "is_specialized": true,
+      "initial_release_date": "2025-03-05"
+    },
+    {
+      "id": 19,
+      "name": "Lovable",
+      "company_id": 16,
+      "category_id": 8,
+      "description": "An AI-powered product engineering assistant.",
+      "is_specialized": true,
+      "initial_release_date": "2024-08-14"
+    },
+    {
+      "id": 20,
+      "name": "Bolt.new",
+      "company_id": 17,
+      "category_id": 8,
+      "description": "An AI-powered web development agent.",
+      "is_specialized": true,
+      "initial_release_date": "2024-09-06"
+    },
+    {
+      "id": 21,
+      "name": "Notebook LM",
+      "company_id": 18,
+      "category_id": 7,
+      "description": "An AI-powered research and note-taking tool.",
+      "is_specialized": true,
+      "initial_release_date": "2023-07-12"
+    },
+    {
+      "id": 22,
+      "name": "Perplexity",
+      "company_id": 19,
+      "category_id": 7,
+      "description": "An AI-powered answer engine and research assistant.",
+      "is_specialized": true,
+      "initial_release_date": "2022-08-01"
+    },
+    {
+      "id": 23,
+      "name": "ChatGPT",
+      "company_id": 1,
+      "category_id": 6,
+      "description": "An AI assistant developed by OpenAI, powered by GPT models.",
+      "is_specialized": false,
+      "initial_release_date": "2022-11-30"
+    },
+    {
+      "id": 24,
+      "name": "Stable Diffusion",
+      "company_id": 20,
+      "category_id": 2,
+      "description": "An open-source AI image generation model developed by Stability AI.",
+      "is_specialized": true,
+      "initial_release_date": "2022-08-22"
+    },
+    {
+      "id": 25,
+      "name": "DALL-E",
+      "company_id": 1,
+      "category_id": 2,
+      "description": "An AI image generation model developed by OpenAI.",
+      "is_specialized": true,
+      "initial_release_date": "2021-01-05"
+    },
+    {
+      "id": 26,
+      "name": "Manus AI",
+      "company_id": 21,
+      "category_id": 9,
+      "description": "An AI agent designed for various tasks and applications.",
+      "is_specialized": true,
+      "initial_release_date": "2025-03-05"
+    }
+  ],
+  "model_versions": [
+    {
+      "id": 1,
+      "model_id": 1,
+      "version_name": "GPT-1",
+      "release_date": "2018-06-11",
+      "is_upcoming": false,
+      "description": "The first GPT model with 117 million parameters.",
+      "parameters": 117000000
+    },
+    {
+      "id": 2,
+      "model_id": 1,
+      "version_name": "GPT-2",
+      "release_date": "2019-02-14",
+      "is_upcoming": false,
+      "description": "The second GPT model with 1.5 billion parameters.",
+      "parameters": 1500000000
+    },
+    {
+      "id": 3,
+      "model_id": 1,
+      "version_name": "GPT-3",
+      "release_date": "2020-05-28",
+      "is_upcoming": false,
+      "description": "The third GPT model with 175 billion parameters.",
+      "parameters": 175000000000
+    },
+    {
+      "id": 4,
+      "model_id": 1,
+      "version_name": "GPT-3.5",
+      "release_date": "2022-11-30",
+      "is_upcoming": false,
+      "description": "An improved version of GPT-3 used in the initial release of ChatGPT."
+    },
+    {
+      "id": 5,
+      "model_id": 1,
+      "version_name": "GPT-4",
+      "release_date": "2023-03-14",
+      "is_upcoming": false,
+      "description": "A multimodal large language model with 1.76 trillion parameters.",
+      "parameters": 1760000000000
+    },
+    {
+      "id": 6,
+      "model_id": 1,
+      "version_name": "GPT-4o",
+      "release_date": "2024-05-13",
+      "is_upcoming": false,
+      "description": "An optimized version of GPT-4 with enhanced capabilities."
+    },
+    {
+      "id": 7,
+      "model_id": 1,
+      "version_name": "o1",
+      "release_date": "2024-09-12",
+      "is_upcoming": false,
+      "description": "A model that OpenAI claims 'can reason like a human.'"
+    },
+    {
+      "id": 8,
+      "model_id": 1,
+      "version_name": "GPT-4.5 (Orion)",
+      "is_upcoming": true,
+      "expected_release_date": "2025-02-15",
+      "description": "Expected next major update to the GPT family."
+    },
+    {
+      "id": 9,
+      "model_id": 1,
+      "version_name": "GPT-5",
+      "is_upcoming": true,
+      "expected_release_date": "2025-08-15",
+      "description": "Expected next generation of the GPT family."
+    },
+    {
+      "id": 10,
+      "model_id": 2,
+      "version_name": "Claude 1",
+      "release_date": "2023-03-14",
+      "is_upcoming": false,
+      "description": "The first Claude model released by Anthropic."
+    },
+    {
+      "id": 11,
+      "model_id": 2,
+      "version_name": "Claude 2",
+      "release_date": "2023-07-11",
+      "is_upcoming": false,
+      "description": "The second Claude model with improved capabilities."
+    },
+    {
+      "id": 12,
+      "model_id": 2,
+      "version_name": "Claude 3 Opus",
+      "release_date": "2024-03-04",
+      "is_upcoming": false,
+      "description": "The most powerful Claude model in the Claude 3 family."
+    },
+    {
+      "id": 13,
+      "model_id": 2,
+      "version_name": "Claude 3.5 Sonnet",
+      "release_date": "2024-06-20",
+      "is_upcoming": false,
+      "description": "An improved version of the Claude 3 Sonnet model."
+    },
+    {
+      "id": 14,
+      "model_id": 2,
+      "version_name": "Claude 4",
+      "is_upcoming": true,
+      "expected_release_date": "2025-11-15",
+      "description": "Expected next generation of the Claude family."
+    },
+    {
+      "id": 15,
+      "model_id": 3,
+      "version_name": "Gemini 1.0",
+      "release_date": "2023-12-06",
+      "is_upcoming": false,
+      "description": "The first Gemini model released by Google DeepMind."
+    },
+    {
+      "id": 16,
+      "model_id": 3,
+      "version_name": "Gemini 1.5",
+      "release_date": "2024-02-15",
+      "is_upcoming": false,
+      "description": "An improved version of Gemini with enhanced capabilities."
+    },
+    {
+      "id": 17,
+      "model_id": 3,
+      "version_name": "Gemini 3",
+      "is_upcoming": true,
+      "expected_release_date": "2025-05-15",
+      "description": "Expected next generation of the Gemini family."
+    },
+    {
+      "id": 18,
+      "model_id": 4,
+      "version_name": "Llama 1",
+      "release_date": "2023-02-24",
+      "is_upcoming": false,
+      "description": "The first Llama model released by Meta AI."
+    },
+    {
+      "id": 19,
+      "model_id": 4,
+      "version_name": "Llama 2",
+      "release_date": "2023-07-18",
+      "is_upcoming": false,
+      "description": "The second Llama model with 70 billion parameters.",
+      "parameters": 70000000000
+    },
+    {
+      "id": 20,
+      "model_id": 4,
+      "version_name": "Llama 3",
+      "release_date": "2024-04-18",
+      "is_upcoming": false,
+      "description": "The third Llama model with 70 billion parameters.",
+      "parameters": 70000000000
+    },
+    {
+      "id": 21,
+      "model_id": 4,
+      "version_name": "Llama 3.1",
+      "release_date": "2024-07-24",
+      "is_upcoming": false,
+      "description": "An improved version of Llama 3 with 405 billion parameters.",
+      "parameters": 405000000000
+    },
+    {
+      "id": 22,
+      "model_id": 4,
+      "version_name": "Llama 4",
+      "is_upcoming": true,
+      "expected_release_date": "2025-02-15",
+      "description": "Expected next generation of the Llama family."
+    },
+    {
+      "id": 23,
+      "model_id": 4,
+      "version_name": "Llama 5",
+      "is_upcoming": true,
+      "expected_release_date": "2025-11-15",
+      "description": "Expected future generation of the Llama family."
+    },
+    {
+      "id": 24,
+      "model_id": 5,
+      "version_name": "Phi-1",
+      "release_date": "2023-06-22",
+      "is_upcoming": false,
+      "description": "The first Phi model with 1.3 billion parameters.",
+      "parameters": 1300000000
+    },
+    {
+      "id": 25,
+      "model_id": 5,
+      "version_name": "Phi-3",
+      "release_date": "2024-04-23",
+      "is_upcoming": false,
+      "description": "The third Phi model with 14 billion parameters.",
+      "parameters": 14000000000
+    },
+    {
+      "id": 26,
+      "model_id": 5,
+      "version_name": "Phi-5",
+      "is_upcoming": true,
+      "expected_release_date": "2025-08-15",
+      "description": "Expected future generation of the Phi family."
+    },
+    {
+      "id": 27,
+      "model_id": 6,
+      "version_name": "Grok-1",
+      "release_date": "2023-11-04",
+      "is_upcoming": false,
+      "description": "The first Grok model with 314 billion parameters.",
+      "parameters": 314000000000
+    },
+    {
+      "id": 28,
+      "model_id": 6,
+      "version_name": "Grok-3",
+      "is_upcoming": true,
+      "expected_release_date": "2025-02-15",
+      "description": "Expected next generation of the Grok family."
+    },
+    {
+      "id": 29,
+      "model_id": 6,
+      "version_name": "Grok-Video",
+      "is_upcoming": true,
+      "expected_release_date": "2025-08-15",
+      "description": "Expected video generation model in the Grok family."
+    },
+    {
+      "id": 30,
+      "model_id": 6,
+      "version_name": "Grok-4",
+      "is_upcoming": true,
+      "expected_release_date": "2025-11-15",
+      "description": "Expected future generation of the Grok family."
+    },
+    {
+      "id": 31,
+      "model_id": 7,
+      "version_name": "Kling 1.0",
+      "release_date": "2024-06-10",
+      "is_upcoming": false,
+      "description": "The first Kling video generation model."
+    },
+    {
+      "id": 32,
+      "model_id": 7,
+      "version_name": "Kling 1.6",
+      "release_date": "2024-12-19",
+      "is_upcoming": false,
+      "description": "An improved version of Kling with 195% enhancement in image-to-video generation capabilities."
+    },
+    {
+      "id": 33,
+      "model_id": 8,
+      "version_name": "Ideogram Beta",
+      "release_date": "2023-08-29",
+      "is_upcoming": false,
+      "description": "The beta version of Ideogram's image generation model."
+    },
+    {
+      "id": 34,
+      "model_id": 8,
+      "version_name": "Ideogram 1.0",
+      "release_date": "2024-02-28",
+      "is_upcoming": false,
+      "description": "The first full release of Ideogram with state-of-the-art text rendering and photorealism."
+    },
+    {
+      "id": 35,
+      "model_id": 8,
+      "version_name": "Ideogram 2.0",
+      "release_date": "2024-08-21",
+      "is_upcoming": false,
+      "description": "An improved version of Ideogram with enhanced capabilities."
+    },
+    {
+      "id": 36,
+      "model_id": 10,
+      "version_name": "Sora 1.0",
+      "release_date": "2024-02-15",
+      "is_upcoming": false,
+      "description": "OpenAI's text-to-video model capable of generating realistic videos up to a minute long."
+    },
+    {
+      "id": 37,
+      "model_id": 11,
+      "version_name": "Mistral 7B",
+      "release_date": "2023-09-27",
+      "is_upcoming": false,
+      "description": "The first Mistral model with 7 billion parameters.",
+      "parameters": 7000000000
+    },
+    {
+      "id": 38,
+      "model_id": 11,
+      "version_name": "Mistral Large",
+      "release_date": "2024-02-26",
+      "is_upcoming": false,
+      "description": "A larger Mistral model with improved capabilities."
+    },
+    {
+      "id": 39,
+      "model_id": 12,
+      "version_name": "Le Chat 1.0",
+      "release_date": "2024-02-26",
+      "is_upcoming": false,
+      "description": "The initial release of Le Chat, Mistral AI's assistant."
+    },
+    {
+      "id": 40,
+      "model_id": 12,
+      "version_name": "Le Chat Mobile",
+      "release_date": "2025-02-06",
+      "is_upcoming": false,
+      "description": "Le Chat released on iOS and Android with a Pro plan at $14.99/month."
+    },
+    {
+      "id": 41,
+      "model_id": 13,
+      "version_name": "DeepSeek-LLM",
+      "release_date": "2023-11-29",
+      "is_upcoming": false,
+      "description": "The initial release of DeepSeek's language model series."
+    },
+    {
+      "id": 42,
+      "model_id": 13,
+      "version_name": "DeepSeek-V2",
+      "release_date": "2024-05-01",
+      "is_upcoming": false,
+      "description": "The second version of DeepSeek's language model."
+    },
+    {
+      "id": 43,
+      "model_id": 13,
+      "version_name": "DeepSeek-V3",
+      "release_date": "2024-12-26",
+      "is_upcoming": false,
+      "description": "A Mixture-of-Experts (MoE) model with 671 billion parameters.",
+      "parameters": 671000000000
+    },
+    {
+      "id": 44,
+      "model_id": 13,
+      "version_name": "DeepSeek-R1",
+      "release_date": "2025-01-20",
+      "is_upcoming": false,
+      "description": "A model with performance comparable to OpenAI-o1, released under MIT License."
+    },
+    {
+      "id": 45,
+      "model_id": 14,
+      "version_name": "DeepSeek Coder 1.0",
+      "release_date": "2023-11-02",
+      "is_upcoming": false,
+      "description": "The initial release of DeepSeek's code-focused model."
+    },
+    {
+      "id": 46,
+      "model_id": 14,
+      "version_name": "DeepSeek Coder V2",
+      "release_date": "2024-07-01",
+      "is_upcoming": false,
+      "description": "The second version of DeepSeek's code-focused model."
+    },
+    {
+      "id": 47,
+      "model_id": 15,
+      "version_name": "Qwen-7B",
+      "release_date": "2023-08-21",
+      "is_upcoming": false,
+      "description": "The initial release of Qwen with 7 billion parameters.",
+      "parameters": 7000000000
+    },
+    {
+      "id": 48,
+      "model_id": 15,
+      "version_name": "Qwen 2.5",
+      "release_date": "2024-09-19",
+      "is_upcoming": false,
+      "description": "A release with over 100 open-source models including base models, instruct models, and quantized models."
+    },
+    {
+      "id": 49,
+      "model_id": 15,
+      "version_name": "Qwen 2.5-Max",
+      "release_date": "2025-01-29",
+      "is_upcoming": false,
+      "description": "A model claimed to surpass DeepSeek V3 in performance."
+    },
+    {
+      "id": 50,
+      "model_id": 15,
+      "version_name": "QwQ-32B",
+      "release_date": "2025-03-07",
+      "is_upcoming": false,
+      "description": "A 32-billion-parameter reasoning model.",
+      "parameters": 32000000000
+    },
+    {
+      "id": 51,
+      "model_id": 16,
+      "version_name": "Midjourney V1",
+      "release_date": "2022-02-01",
+      "is_upcoming": false,
+      "description": "The initial release of Midjourney's image generation model."
+    },
+    {
+      "id": 52,
+      "model_id": 16,
+      "version_name": "Midjourney V2",
+      "release_date": "2022-04-12",
+      "is_upcoming": false,
+      "description": "The second version of Midjourney's image generation model."
+    },
+    {
+      "id": 53,
+      "model_id": 16,
+      "version_name": "Midjourney V3",
+      "release_date": "2022-07-25",
+      "is_upcoming": false,
+      "description": "The third version of Midjourney's image generation model."
+    },
+    {
+      "id": 54,
+      "model_id": 16,
+      "version_name": "Midjourney V4",
+      "release_date": "2022-11-01",
+      "is_upcoming": false,
+      "description": "The fourth version of Midjourney's image generation model."
+    },
+    {
+      "id": 55,
+      "model_id": 16,
+      "version_name": "Midjourney V5.1",
+      "release_date": "2023-05-04",
+      "is_upcoming": false,
+      "description": "An improved version of Midjourney with a stronger default aesthetic."
+    },
+    {
+      "id": 56,
+      "model_id": 16,
+      "version_name": "Midjourney V5.2",
+      "release_date": "2023-06-01",
+      "is_upcoming": false,
+      "description": "A further improved version of Midjourney."
+    },
+    {
+      "id": 57,
+      "model_id": 16,
+      "version_name": "Midjourney V6",
+      "release_date": "2023-12-22",
+      "is_upcoming": false,
+      "description": "The sixth major version of Midjourney's image generation model."
+    },
+    {
+      "id": 58,
+      "model_id": 16,
+      "version_name": "Midjourney V6.1",
+      "release_date": "2024-07-30",
+      "is_upcoming": false,
+      "description": "An update with enhanced skin textures and improved human realism."
+    },
+    {
+      "id": 59,
+      "model_id": 17,
+      "version_name": "Leonardo Initial Release",
+      "release_date": "2022-12-01",
+      "is_upcoming": false,
+      "description": "The initial release of Leonardo AI's image generation platform."
+    },
+    {
+      "id": 60,
+      "model_id": 17,
+      "version_name": "Leonardo Image Generation V2",
+      "release_date": "2024-05-24",
+      "is_upcoming": false,
+      "description": "A major update to Leonardo AI's image generation user interface."
+    },
+    {
+      "id": 61,
+      "model_id": 17,
+      "version_name": "Leonardo Phoenix",
+      "release_date": "2024-06-20",
+      "is_upcoming": false,
+      "description": "A new model with improved image generation capabilities."
+    },
+    {
+      "id": 62,
+      "model_id": 18,
+      "version_name": "Manus Beta",
+      "release_date": "2025-03-05",
+      "is_upcoming": false,
+      "description": "The beta release of Manus, a general AI agent, in invitation-only preview phase."
+    },
+    {
+      "id": 63,
+      "model_id": 19,
+      "version_name": "Lovable Initial Release",
+      "release_date": "2024-08-14",
+      "is_upcoming": false,
+      "description": "The initial release of Lovable, an AI-powered product engineering assistant."
+    },
+    {
+      "id": 64,
+      "model_id": 19,
+      "version_name": "Lovable Visual Edits",
+      "release_date": "2025-02-13",
+      "is_upcoming": false,
+      "description": "An update with faster and more precise visual editing capabilities."
+    },
+    {
+      "id": 65,
+      "model_id": 19,
+      "version_name": "Lovable Code Viewer",
+      "release_date": "2025-03-03",
+      "is_upcoming": false,
+      "description": "An update allowing users to view and edit project code."
+    },
+    {
+      "id": 66,
+      "model_id": 20,
+      "version_name": "Bolt.new Initial Release",
+      "release_date": "2024-09-06",
+      "is_upcoming": false,
+      "description": "The initial release of Bolt.new, an AI-powered web development agent."
+    },
+    {
+      "id": 67,
+      "model_id": 20,
+      "version_name": "Bolt.new Visual Inspector",
+      "release_date": "2025-01-01",
+      "is_upcoming": false,
+      "description": "An update introducing the Visual Inspector feature."
+    },
+    {
+      "id": 68,
+      "model_id": 21,
+      "version_name": "Notebook LM Initial Release",
+      "release_date": "2023-07-12",
+      "is_upcoming": false,
+      "description": "The initial rollout of Notebook LM, an AI-powered research and note-taking tool."
+    },
+    {
+      "id": 69,
+      "model_id": 21,
+      "version_name": "Notebook LM Premium",
+      "release_date": "2024-12-13",
+      "is_upcoming": false,
+      "description": "An update with a new UI, audio interactivity, and a premium tier."
+    },
+    {
+      "id": 70,
+      "model_id": 22,
+      "version_name": "Perplexity Initial Release",
+      "release_date": "2022-08-01",
+      "is_upcoming": false,
+      "description": "The initial release of Perplexity, an AI-powered answer engine."
+    },
+    {
+      "id": 71,
+      "model_id": 22,
+      "version_name": "Perplexity Assistant",
+      "release_date": "2025-01-23",
+      "is_upcoming": false,
+      "description": "An update introducing Perplexity Assistant for Android with multi-app integration and task automation."
+    },
+    {
+      "id": 72,
+      "model_id": 22,
+      "version_name": "Perplexity Deep Research",
+      "release_date": "2025-02-14",
+      "is_upcoming": false,
+      "description": "An update introducing Deep Research, which can analyze hundreds of sources in minutes."
+    },
+    {
+      "id": 73,
+      "model_id": 23,
+      "version_name": "ChatGPT Initial Release",
+      "release_date": "2022-11-30",
+      "is_upcoming": false,
+      "description": "The initial release of ChatGPT, powered by GPT-3.5."
+    },
+    {
+      "id": 74,
+      "model_id": 23,
+      "version_name": "ChatGPT Plus",
+      "release_date": "2023-02-01",
+      "is_upcoming": false,
+      "description": "A premium subscription option for ChatGPT users."
+    },
+    {
+      "id": 75,
+      "model_id": 23,
+      "version_name": "ChatGPT with GPT-4",
+      "release_date": "2023-03-14",
+      "is_upcoming": false,
+      "description": "ChatGPT updated to use GPT-4 for Plus subscribers."
+    },
+    {
+      "id": 76,
+      "model_id": 23,
+      "version_name": "ChatGPT with Plugins",
+      "release_date": "2023-03-23",
+      "is_upcoming": false,
+      "description": "ChatGPT updated with plugin support."
+    },
+    {
+      "id": 77,
+      "model_id": 23,
+      "version_name": "ChatGPT iOS App",
+      "release_date": "2023-05-15",
+      "is_upcoming": false,
+      "description": "ChatGPT released as an iOS app."
+    },
+    {
+      "id": 78,
+      "model_id": 23,
+      "version_name": "ChatGPT with Web Browsing",
+      "release_date": "2023-05-23",
+      "is_upcoming": false,
+      "description": "ChatGPT updated with web browsing capabilities powered by Bing."
+    },
+    {
+      "id": 79,
+      "model_id": 23,
+      "version_name": "ChatGPT Enterprise",
+      "release_date": "2023-08-28",
+      "is_upcoming": false,
+      "description": "An enterprise version of ChatGPT with enhanced security and unlimited usage of GPT-4."
+    },
+    {
+      "id": 80,
+      "model_id": 23,
+      "version_name": "ChatGPT with Custom GPTs",
+      "release_date": "2023-11-06",
+      "is_upcoming": false,
+      "description": "ChatGPT updated with the ability to create custom GPTs."
+    },
+    {
+      "id": 81,
+      "model_id": 23,
+      "version_name": "ChatGPT with GPT Store",
+      "release_date": "2024-01-10",
+      "is_upcoming": false,
+      "description": "ChatGPT updated with the GPT Store for discovering custom GPTs."
+    },
+    {
+      "id": 82,
+      "model_id": 23,
+      "version_name": "ChatGPT with GPT-4o",
+      "release_date": "2024-05-13",
+      "is_upcoming": false,
+      "description": "ChatGPT updated to use GPT-4o with enhanced intelligence and additional features for free users."
+    },
+    {
+      "id": 83,
+      "model_id": 23,
+      "version_name": "SearchGPT",
+      "release_date": "2024-07-25",
+      "is_upcoming": false,
+      "description": "An AI-powered search prototype designed to answer user queries with direct answers."
+    },
+    {
+      "id": 84,
+      "model_id": 24,
+      "version_name": "Stable Diffusion 1.0",
+      "release_date": "2022-08-22",
+      "is_upcoming": false,
+      "description": "The initial release of Stable Diffusion, an open-source AI image generation model."
+    },
+    {
+      "id": 85,
+      "model_id": 24,
+      "version_name": "Stable Diffusion 2.0",
+      "release_date": "2022-11-24",
+      "is_upcoming": false,
+      "description": "The second major version of Stable Diffusion with improved image quality."
+    },
+    {
+      "id": 86,
+      "model_id": 24,
+      "version_name": "Stable Diffusion XL 1.0",
+      "release_date": "2023-07-26",
+      "is_upcoming": false,
+      "description": "An enhanced version of Stable Diffusion with higher quality outputs."
+    },
+    {
+      "id": 87,
+      "model_id": 24,
+      "version_name": "Stable Diffusion 3",
+      "release_date": "2024-02-28",
+      "is_upcoming": false,
+      "description": "The third major version of Stable Diffusion with significant improvements in image quality and coherence."
+    },
+    {
+      "id": 88,
+      "model_id": 25,
+      "version_name": "DALL-E 1",
+      "release_date": "2021-01-05",
+      "is_upcoming": false,
+      "description": "The initial release of DALL-E, OpenAI's text-to-image model."
+    },
+    {
+      "id": 89,
+      "model_id": 25,
+      "version_name": "DALL-E 2",
+      "release_date": "2022-04-06",
+      "is_upcoming": false,
+      "description": "The second version of DALL-E with significantly improved image quality and accuracy."
+    },
+    {
+      "id": 90,
+      "model_id": 25,
+      "version_name": "DALL-E 3",
+      "release_date": "2023-10-11",
+      "is_upcoming": false,
+      "description": "The third version of DALL-E with enhanced text understanding and image generation capabilities."
+    },
+    {
+      "id": 91,
+      "model_id": 26,
+      "version_name": "Manus AI Initial Release",
+      "release_date": "2025-03-05",
+      "is_upcoming": false,
+      "description": "The initial release of Manus AI, an AI agent for various tasks and applications."
+    }
+  ]
+}
