@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crestline Auto Group — Current State Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e42;
+    --navy-light: #243d56;
+    --teal: #004d50;
+    --teal-accent: #00a8ae;
+    --amber: #c17f24;
+    --amber-light: #e09b3d;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --white: #ffffff;
+    --text-muted: #7a8fa6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    font-size: 13px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  .header {
+    padding: 44px 56px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal-accent);
+    margin-bottom: 10px;
+  }
+
+  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 0.04em; line-height: 1; }
+  .header .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 7px; font-weight: 400; }
+
+  .score-ring {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 84px; height: 84px; border-radius: 50%;
+    border: 1.5px solid var(--amber); background: rgba(193,127,36,0.07); flex-shrink: 0;
+  }
+  .score-ring .num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--amber-light); line-height: 1; }
+  .score-ring .denom { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted); }
+  .score-ring .band { font-family: 'DM Mono', monospace; font-size: 7px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 3px; }
+
+  .tab-nav { display: flex; padding: 0 56px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .tab-btn {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent;
+    padding: 15px 22px; cursor: pointer; transition: color 0.2s; margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--white); }
+  .tab-btn.active { color: var(--teal-accent); border-bottom-color: var(--teal-accent); }
+
+  .tab-panel { display: none; padding: 44px 56px 56px; }
+  .tab-panel.active { display: block; }
+
+  .section-header { margin-bottom: 32px; }
+  .section-header .eyebrow { color: var(--amber); margin-bottom: 6px; }
+  .section-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 0.04em; }
+  .section-header p { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.65; max-width: 620px; font-weight: 400; }
+
+  .scores-row { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+  .score-card { flex: 1; min-width: 110px; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 14px 16px; }
+  .score-card-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .score-card-bar { height: 2px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+  .score-card-fill { height: 100%; border-radius: 2px; }
+  .fill-s { background: var(--red-light); } .fill-p { background: var(--amber-light); }
+  .fill-d { background: var(--teal-accent); } .fill-r { background: var(--amber-light); }
+  .color-s { color: var(--red-light); } .color-p { color: var(--amber-light); }
+  .color-d { color: var(--teal-accent); } .color-r { color: var(--amber-light); }
+  .score-card-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; line-height: 1; }
+  .score-card-denom { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-muted); margin-left: 2px; }
+
+  .state-badge { display: inline-block; background: var(--red); color: white; font-family: 'DM Mono', monospace; font-size: 8px; padding: 2px 8px; border-radius: 2px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .tag { display: inline-block; border-radius: 2px; padding: 2px 7px; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.07em; white-space: nowrap; }
+  .tag.red { background: rgba(192,57,43,0.14); border: 1px solid rgba(192,57,43,0.28); color: var(--red-light); }
+  .tag.amber { background: rgba(193,127,36,0.1); border: 1px solid rgba(193,127,36,0.28); color: var(--amber-light); }
+  .tag.green { background: rgba(0,168,174,0.1); border: 1px solid rgba(0,168,174,0.28); color: var(--teal-accent); }
+
+  .swimlane-wrap { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; }
+  .swimlane-header { background: var(--teal); padding: 11px 20px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.65); display: flex; align-items: center; justify-content: space-between; }
+  .lane-row { display: grid; grid-template-columns: 110px 1fr; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .lane-row:last-child { border-bottom: none; }
+  .lane-label { background: rgba(255,255,255,0.025); border-right: 1px solid rgba(255,255,255,0.05); padding: 14px 12px; display: flex; align-items: center; justify-content: flex-end; }
+  .lane-label span { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-align: right; line-height: 1.5; }
+  .lane-steps { padding: 14px 18px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; min-height: 78px; }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .step-box { background: var(--navy-light); border: 1px solid rgba(255,255,255,0.09); border-radius: 4px; padding: 8px 11px; font-size: 11px; font-weight: 500; color: var(--white); text-align: center; min-width: 88px; line-height: 1.3; }
+  .step-box.broken { border-color: var(--red-light); background: rgba(192,57,43,0.1); }
+  .step-box.warn { border-color: var(--amber); background: rgba(193,127,36,0.08); }
+  .step-box.ok { border-color: var(--teal-accent); background: rgba(0,168,174,0.07); }
+  .step-note { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--red-light); text-align: center; line-height: 1.3; }
+  .step-note.amber { color: var(--amber); }
+  .arrow { font-size: 13px; color: var(--text-muted); flex-shrink: 0; align-self: flex-start; margin-top: 10px; }
+
+  .gap-summary { margin-top: 36px; }
+  .gap-summary-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 14px; }
+  .gap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .gap-item { background: var(--navy-mid); border-left: 2px solid var(--red-light); border-radius: 0 4px 4px 0; padding: 11px 14px; }
+  .gap-item.amber { border-left-color: var(--amber); }
+  .gap-item-label { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .gap-item-text { font-size: 12px; color: var(--white); line-height: 1.5; font-weight: 400; }
+
+  .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+  .tech-cat { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; }
+  .tech-cat-header { padding: 10px 16px; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; }
+  .tech-cat-header.dms { background: rgba(193,127,36,0.18); color: var(--amber-light); }
+  .tech-cat-header.crm { background: rgba(192,57,43,0.14); color: var(--red-light); }
+  .tech-cat-header.inventory { background: rgba(0,77,80,0.35); color: var(--teal-accent); }
+  .tech-cat-header.data { background: rgba(0,107,111,0.25); color: var(--teal-accent); }
+  .tech-cat-header.marketing { background: rgba(193,127,36,0.1); color: var(--amber); }
+  .tech-cat-header.comms { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+  .tech-cat-header.vendors { background: rgba(0,77,80,0.2); color: var(--teal-accent); }
+  .tech-item { padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .tech-name { font-size: 12px; color: var(--white); font-weight: 500; margin-bottom: 2px; }
+  .tech-note { font-size: 11px; color: var(--text-muted); font-weight: 400; line-height: 1.4; }
+  .tech-status { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; padding-top: 2px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot.red { background: var(--red-light); } .dot.amber { background: var(--amber-light); } .dot.green { background: var(--teal-accent); }
+
+  .integration-wrap { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 28px; }
+  .integration-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 24px; }
+  .star-map { position: relative; width: 100%; height: 340px; }
+  .star-map svg { width: 100%; height: 100%; overflow: visible; }
+  .legend { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .legend-swatch { width: 22px; height: 2px; }
+  .legend-swatch.connected { background: var(--teal-accent); }
+  .legend-swatch.partial { background: var(--amber); }
+  .legend-swatch.disconnected { background: none; border-top: 2px dashed var(--red-light); }
+
+  .dfd-wrap { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 28px; }
+  .dfd-header { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .dfd-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .dfd-col { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.04); }
+  .dfd-col:last-child { border-right: none; }
+  .dfd-col-header { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); text-align: center; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; }
+  .dfd-node { background: var(--navy-light); border: 1px solid rgba(255,255,255,0.08); border-radius: 5px; padding: 9px 10px; width: 100%; text-align: center; }
+  .dfd-node.source { border-color: var(--teal-accent); }
+  .dfd-node.store { border-color: var(--amber); }
+  .dfd-node.dead { border-color: var(--red-light); background: rgba(192,57,43,0.07); }
+  .dfd-node-title { font-size: 11px; font-weight: 600; color: var(--white); margin-bottom: 3px; line-height: 1.2; }
+  .dfd-node-sub { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted); line-height: 1.3; }
+  .dfd-arrow { font-size: 14px; color: var(--text-muted); line-height: 1; }
+  .dfd-arrow.broken { color: rgba(231,76,60,0.5); }
+  .dfd-gap { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--red-light); text-align: center; line-height: 1.45; padding: 5px 8px; background: rgba(192,57,43,0.07); border-radius: 3px; border: 1px solid rgba(192,57,43,0.18); width: 100%; }
+
+  /* ORG CHART */
+  .org-wrap { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 32px; margin-bottom: 32px; overflow-x: auto; }
+  .org-header { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; }
+
+  /* BUDGET TABLE */
+  .budget-wrap { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; }
+  .budget-title { padding: 16px 24px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+  .budget-table { width: 100%; border-collapse: collapse; }
+  .budget-table th { padding: 10px 24px; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .budget-table th:nth-child(2), .budget-table th:nth-child(3) { text-align: right; }
+  .budget-table td { padding: 13px 24px; font-size: 12px; color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+  .budget-table td:nth-child(2), .budget-table td:nth-child(3) { text-align: right; font-family: 'DM Mono', monospace; font-size: 12px; }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-category { font-weight: 500; margin-bottom: 2px; }
+  .budget-note { font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-top: 3px; }
+  .pct-current { color: var(--amber-light); font-weight: 500; }
+  .pct-future { color: var(--teal-accent); font-weight: 500; }
+  .pct-same { color: var(--text-muted); font-weight: 500; }
+
+  .owner-note { margin-top: 16px; padding: 14px 18px; background: rgba(193,127,36,0.07); border: 1px solid rgba(193,127,36,0.15); border-radius: 4px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .owner-note strong { color: var(--amber-light); font-weight: 500; }
+
+  .disclaimer { margin: 40px 56px 0; padding: 20px 0 40px; border-top: 1px solid rgba(255,255,255,0.05); font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted); letter-spacing: 0.05em; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="eyebrow">PDL · Current State Assessment · Synthetic Case Study</div>
+    <h1>Crestline Auto Group</h1>
+    <div class="subtitle">Independent Used Car Dealer · 14 employees · $6.8M revenue · 12 years in operation · B2C · Google Workspace</div>
+  </div>
+  <div class="score-ring">
+    <span class="num">52.2</span>
+    <span class="denom">/100</span>
+    <span class="band">Developing</span>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('process', this)">Process Map</button>
+  <button class="tab-btn" onclick="showTab('techstack', this)">Tech Stack</button>
+  <button class="tab-btn" onclick="showTab('dataflow', this)">Data Flow</button>
+  <button class="tab-btn" onclick="showTab('orgbudget', this)">Org &amp; Budget</button>
+</div>
+
+<!-- TAB 1: PROCESS MAP -->
+<div class="tab-panel active" id="tab-process">
+  <div class="section-header">
+    <div class="eyebrow">Current State · Vehicle Lifecycle</div>
+    <h2>Reconditioning &amp; Sales Process</h2>
+    <p>How a vehicle moves from acquisition to sale across five functional areas. Red indicates a documented gap or breakdown. Amber indicates an undocumented or inconsistently followed step.</p>
+  </div>
+
+  <div class="scores-row">
+    <div class="score-card"><div class="score-card-label">Strategy</div><div class="score-card-bar"><div class="score-card-fill fill-s" style="width:22%"></div></div><span class="score-card-num color-s">5.6</span><span class="score-card-denom">/25</span></div>
+    <div class="score-card"><div class="score-card-label">Processes</div><div class="score-card-bar"><div class="score-card-fill fill-p" style="width:56%"></div></div><span class="score-card-num color-p">13.9</span><span class="score-card-denom">/25</span></div>
+    <div class="score-card"><div class="score-card-label">Data</div><div class="score-card-bar"><div class="score-card-fill fill-d" style="width:74%"></div></div><span class="score-card-num color-d">18.6</span><span class="score-card-denom">/25</span></div>
+    <div class="score-card"><div class="score-card-label">Resources</div><div class="score-card-bar"><div class="score-card-fill fill-r" style="width:56%"></div></div><span class="score-card-num color-r">14.1</span><span class="score-card-denom">/25</span></div>
+  </div>
+
+  <div class="swimlane-wrap">
+    <div class="swimlane-header"><span>Vehicle Lifecycle · Acquisition → Recon → Lot → Sale</span><span class="state-badge">Current State</span></div>
+
+    <div class="lane-row">
+      <div class="lane-label"><span>Owner /<br>Management</span></div>
+      <div class="lane-steps">
+        <div class="step"><div class="step-box warn">Source vehicle<br>(auction / trade-in)</div><div class="step-note amber">Buying criteria: instinct only</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box warn">Purchase decision</div><div class="step-note amber">No turn-time data by type</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box warn">Set price &amp; margin</div><div class="step-note amber">GPU tracked; no velocity data</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box ok">Review units &amp;<br>GPU weekly</div></div>
+      </div>
+    </div>
+
+    <div class="lane-row">
+      <div class="lane-label"><span>Recon<br>Vendor</span></div>
+      <div class="lane-steps">
+        <div class="step"><div class="step-box broken">Vehicle received</div><div class="step-note">No SLA — informal arrangement</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box broken">Inspection &amp;<br>mechanical repair</div><div class="step-note">No priority logic;<br>vendor unaccountable</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box broken">Vehicle returned</div><div class="step-note">Timeline unpredictable;<br>3-year pattern</div></div>
+      </div>
+    </div>
+
+    <div class="lane-row">
+      <div class="lane-label"><span>Internal<br>Ops</span></div>
+      <div class="lane-steps">
+        <div class="step"><div class="step-box broken">Handoff to<br>recon vendor</div><div class="step-note">No defined handoff process</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box warn">Detail &amp; photos<br>(internal)</div><div class="step-note amber">Ad hoc scheduling</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box warn">Create listing<br>(AutoTrader / web)</div><div class="step-note amber">Manual; no standard template</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box ok">Vehicle on lot</div></div>
+      </div>
+    </div>
+
+    <div class="lane-row">
+      <div class="lane-label"><span>Sales</span></div>
+      <div class="lane-steps">
+        <div class="step"><div class="step-box warn">Lead inquiry<br>(phone / walk-in / web)</div><div class="step-note amber">No centralized tracking</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box warn">Sales conversation</div><div class="step-note amber">Follow-up informal &amp; manual</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box ok">Deal closed;<br>recorded in IDMS</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box broken">Post-sale follow-up</div><div class="step-note">No structured process</div></div>
+      </div>
+    </div>
+
+    <div class="lane-row">
+      <div class="lane-label"><span>Finance /<br>Flooring</span></div>
+      <div class="lane-steps">
+        <div class="step"><div class="step-box ok">NextGear loan<br>drawn at purchase</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box broken">Interest accrues<br>during recon delay</div><div class="step-note">Holding cost invisible<br>in reporting</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box warn">Loan repaid at sale;<br>margin recorded</div><div class="step-note amber">Holding cost not<br>factored into GPU</div></div>
+        <div class="arrow">→</div>
+        <div class="step"><div class="step-box broken">Annual budget set</div><div class="step-note">Based on last year;<br>no strategic anchor</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-summary">
+    <div class="gap-summary-title">Identified Gaps</div>
+    <div class="gap-grid">
+      <div class="gap-item"><div class="gap-item-label">Process · Critical</div><div class="gap-item-text">No recon SLA with vendor. A three-year bottleneck with no accountability structure on either side of the relationship.</div></div>
+      <div class="gap-item"><div class="gap-item-label">Process · Critical</div><div class="gap-item-text">No defined handoff process from acquisition to recon vendor. Timing is informal, inconsistent, and unowned internally.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Data · High</div><div class="gap-item-text">Days-to-sale by source and vehicle type is not tracked anywhere. Buying decisions are made without turn-time data.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Finance · High</div><div class="gap-item-text">NextGear holding cost during recon delays is invisible in reporting — a compounding capital drag on every strong buying month.</div></div>
+      <div class="gap-item"><div class="gap-item-label">Strategy · Critical</div><div class="gap-item-text">No defined customer target or how-to-win logic. Every major decision defaults to instinct and reputation.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Sales · Medium</div><div class="gap-item-text">No centralized lead tracking. Follow-up is informal and not measured against any conversion benchmark.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: TECH STACK -->
+<div class="tab-panel" id="tab-techstack">
+  <div class="section-header">
+    <div class="eyebrow">Current State · Technology</div>
+    <h2>Tech Stack Assessment</h2>
+    <p>DealerSocket IDMS is capable of covering most functional areas — inventory, deal management, accounting, reporting, customer records, and CRM. It is being used for deal processing and inventory only. The gap is not the tool. It is utilization and integration.</p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-cat">
+      <div class="tech-cat-header dms"><span>DMS · Dealer Management</span><span class="tag amber">underutilized</span></div>
+      <div class="tech-item">
+        <div><div class="tech-name">DealerSocket IDMS</div><div class="tech-note">Deal processing, inventory, titles, F&I, basic customer records. CRM module, workflow automation, and custom reporting not activated.</div></div>
+        <div class="tech-status"><div class="dot amber"></div></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">NextGear Capital</div><div class="tech-note">Floorplan financing. Tracks per-unit loan balances. Not connected to IDMS or operational reporting — holding cost is invisible alongside sales data.</div></div>
+        <div class="tech-status"><div class="dot amber"></div><span class="tag amber">disconnected</span></div>
+      </div>
+    </div>
+
+    <div class="tech-cat">
+      <div class="tech-cat-header crm"><span>CRM · Customer Relationship</span><span class="tag red">missing</span></div>
+      <div class="tech-item">
+        <div><div class="tech-name">No CRM Active</div><div class="tech-note">IDMS includes a CRM module — not activated. Leads managed via phone, Gmail, and memory. No pipeline, no follow-up system, no conversion tracking.</div></div>
+        <div class="tech-status"><div class="dot red"></div></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Gmail</div><div class="tech-note">Part of Google Workspace. Used for informal lead follow-up. No shared inbox, no IDMS integration, no team visibility into conversations.</div></div>
+        <div class="tech-status"><div class="dot red"></div></div>
+      </div>
+    </div>
+
+    <div class="tech-cat">
+      <div class="tech-cat-header inventory"><span>Inventory Management</span></div>
+      <div class="tech-item">
+        <div><div class="tech-name">IDMS Inventory Module</div><div class="tech-note">VIN tracking, pricing, vehicle details. Core function used consistently. Turn-time reporting not configured.</div></div>
+        <div class="tech-status"><div class="dot amber"></div></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Google Sheets</div><div class="tech-note">Running parallel to IDMS for ad hoc tracking — recon status, days on lot estimates, buying notes. A symptom of unmet reporting needs in the DMS.</div></div>
+        <div class="tech-status"><div class="dot amber"></div><span class="tag amber">workaround</span></div>
+      </div>
+    </div>
+
+    <div class="tech-cat">
+      <div class="tech-cat-header data"><span>Reporting &amp; Data</span></div>
+      <div class="tech-item">
+        <div><div class="tech-name">IDMS Standard Reports</div><div class="tech-note">Units sold and GPU pulled manually each week. Custom reporting module available but not configured. Phase 1: build the reports that already exist in the tool.</div></div>
+        <div class="tech-status"><div class="dot amber"></div></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Days-to-Sale Tracking</div><div class="tech-note">Not captured in any system. The highest-leverage operational metric — acquisition-to-sale time by source and vehicle type — does not exist.</div></div>
+        <div class="tech-status"><div class="dot red"></div><span class="tag red">missing</span></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Looker Studio</div><div class="tech-note">Not in use. Phase 2 consideration if IDMS reporting hits its ceiling. Free, connects to Google Sheets and exported IDMS data.</div></div>
+        <div class="tech-status"><div class="dot red"></div><span class="tag amber">phase 2</span></div>
+      </div>
+    </div>
+
+    <div class="tech-cat">
+      <div class="tech-cat-header marketing"><span>Marketing &amp; Listings</span></div>
+      <div class="tech-item">
+        <div><div class="tech-name">AutoTrader</div><div class="tech-note">Primary inventory listing channel. Lead performance data not connected to sales outcomes in IDMS.</div></div>
+        <div class="tech-status"><div class="dot green"></div></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Facebook Marketplace</div><div class="tech-note">Secondary listing channel. No performance tracking or lead capture tied to any system.</div></div>
+        <div class="tech-status"><div class="dot amber"></div></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Dealer Website</div><div class="tech-note">IDMS-integrated inventory feed. Google Analytics installed but not actively monitored or connected to lead outcomes.</div></div>
+        <div class="tech-status"><div class="dot amber"></div></div>
+      </div>
+    </div>
+
+    <div class="tech-cat">
+      <div class="tech-cat-header comms"><span>Communications</span></div>
+      <div class="tech-item">
+        <div><div class="tech-name">Phone (primary channel)</div><div class="tech-note">No call tracking, logging, or routing. Inbound leads answered or missed with no visibility into volume, source, or outcome.</div></div>
+        <div class="tech-status"><div class="dot red"></div><span class="tag red">untracked</span></div>
+      </div>
+      <div class="tech-item">
+        <div><div class="tech-name">Google Chat / Text</div><div class="tech-note">Part of Google Workspace. Sales conversations on personal devices — no record, no handoff, no team visibility.</div></div>
+        <div class="tech-status"><div class="dot red"></div></div>
+      </div>
+    </div>
+
+    <div class="tech-cat" style="grid-column: span 3;">
+      <div class="tech-cat-header vendors">
+        <span>Operationally Critical Vendors</span>
+        <span style="font-size:8px;color:var(--text-muted);font-family:'DM Mono',monospace;letter-spacing:0.05em;">Vendors whose performance directly affects revenue or execution</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);">
+        <div class="tech-item">
+          <div><div class="tech-name">Recon Vendor</div><div class="tech-note">External mechanical reconditioning. Primary operational bottleneck — three-year pattern of delays with no SLA, no performance tracking, and no accountability structure.</div></div>
+          <div class="tech-status"><div class="dot red"></div><span class="tag red">unmanaged</span></div>
+        </div>
+        <div class="tech-item">
+          <div><div class="tech-name">AutoTrader</div><div class="tech-note">Primary lead generation channel. Performance not measured against sales outcomes in IDMS.</div></div>
+          <div class="tech-status"><div class="dot amber"></div><span class="tag amber">unmeasured</span></div>
+        </div>
+        <div class="tech-item">
+          <div><div class="tech-name">NextGear Capital</div><div class="tech-note">Floorplan financing partner. Capital availability tied directly to inventory turn velocity. Relationship is functional but not strategically managed.</div></div>
+          <div class="tech-status"><div class="dot amber"></div><span class="tag amber">reactive</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="integration-wrap">
+    <div class="integration-title">Integration Map — How Tools Currently Communicate</div>
+    <div class="star-map">
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <defs>
+          <marker id="arr-teal" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#00a8ae" opacity="0.7"/></marker>
+          <marker id="arr-amber" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#e09b3d" opacity="0.7"/></marker>
+          <marker id="arr-red" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#e74c3c" opacity="0.5"/></marker>
+        </defs>
+        <rect x="320" y="120" width="160" height="64" rx="6" fill="#1a3a2a" stroke="#e09b3d" stroke-width="1.5"/>
+        <text x="400" y="145" text-anchor="middle" fill="#e09b3d" font-size="11" font-weight="600" font-family="Inter,sans-serif">DealerSocket IDMS</text>
+        <text x="400" y="161" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">DMS · Core System</text>
+        <text x="400" y="175" text-anchor="middle" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">Inventory · Deals · F&amp;I · Records</text>
+
+        <rect x="50" y="25" width="145" height="52" rx="6" fill="#1a2e42" stroke="#e09b3d" stroke-width="1" opacity="0.85"/>
+        <text x="122" y="48" text-anchor="middle" fill="#e09b3d" font-size="11" font-weight="500" font-family="Inter,sans-serif">NextGear Capital</text>
+        <text x="122" y="64" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Floorplan Financing</text>
+        <line x1="195" y1="64" x2="322" y2="138" stroke="#e09b3d" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-amber)"/>
+        <text x="240" y="94" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace" transform="rotate(-26,240,94)">manual / isolated</text>
+
+        <rect x="610" y="25" width="150" height="52" rx="6" fill="#1a2e42" stroke="#7a8fa6" stroke-width="1" opacity="0.8"/>
+        <text x="685" y="48" text-anchor="middle" fill="#c0c8d4" font-size="11" font-weight="500" font-family="Inter,sans-serif">Google Workspace</text>
+        <text x="685" y="64" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Gmail · Sheets · Drive</text>
+        <line x1="610" y1="64" x2="480" y2="138" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" marker-end="url(#arr-red)"/>
+        <text x="562" y="94" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace" transform="rotate(27,562,94)">not connected</text>
+
+        <rect x="632" y="140" width="148" height="52" rx="6" fill="#1a2e42" stroke="#00a8ae" stroke-width="1" opacity="0.85"/>
+        <text x="706" y="160" text-anchor="middle" fill="#00a8ae" font-size="11" font-weight="500" font-family="Inter,sans-serif">AutoTrader / Website</text>
+        <text x="706" y="176" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Listings · Lead Channel</text>
+        <text x="706" y="186" text-anchor="middle" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">Performance unmeasured</text>
+        <line x1="632" y1="162" x2="480" y2="162" stroke="#00a8ae" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+        <text x="540" y="155" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">inventory feed</text>
+
+        <rect x="565" y="248" width="148" height="52" rx="6" fill="#1a2e42" stroke="#e09b3d" stroke-width="1" opacity="0.75"/>
+        <text x="639" y="271" text-anchor="middle" fill="#e09b3d" font-size="11" font-weight="500" font-family="Inter,sans-serif">Google Sheets</text>
+        <text x="639" y="287" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Manual Workaround</text>
+        <line x1="565" y1="264" x2="455" y2="184" stroke="#e09b3d" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-amber)"/>
+        <text x="497" y="236" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">manual export</text>
+
+        <rect x="95" y="248" width="148" height="52" rx="6" fill="rgba(192,57,43,0.1)" stroke="#e74c3c" stroke-width="1" opacity="0.9"/>
+        <text x="169" y="271" text-anchor="middle" fill="#e74c3c" font-size="11" font-weight="500" font-family="Inter,sans-serif">No CRM Active</text>
+        <text x="169" y="287" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Phone · Gmail · Memory</text>
+        <line x1="243" y1="264" x2="345" y2="184" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5" marker-end="url(#arr-red)"/>
+        <text x="268" y="240" fill="#e74c3c" font-size="8" font-family="'DM Mono',monospace" opacity="0.8">not connected</text>
+
+        <rect x="22" y="140" width="148" height="52" rx="6" fill="#1a2e42" stroke="#7a8fa6" stroke-width="1" opacity="0.7"/>
+        <text x="96" y="162" text-anchor="middle" fill="#c0c8d4" font-size="11" font-weight="500" font-family="Inter,sans-serif">Facebook Marketplace</text>
+        <text x="96" y="178" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Informal Listing Channel</text>
+        <line x1="170" y1="162" x2="320" y2="162" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4" opacity="0.4" marker-end="url(#arr-red)"/>
+        <text x="218" y="155" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">not connected</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch connected"></div>Connected — data flows automatically</div>
+      <div class="legend-item"><div class="legend-swatch partial"></div>Partial — manual export or reconciliation required</div>
+      <div class="legend-item"><div class="legend-swatch disconnected"></div>Disconnected — no integration exists</div>
+    </div>
+  </div>
+
+  <div class="gap-summary">
+    <div class="gap-summary-title">Tech Stack Gaps</div>
+    <div class="gap-grid">
+      <div class="gap-item"><div class="gap-item-label">CRM · Critical</div><div class="gap-item-text">IDMS includes a CRM module — not activated. Leads from phone, walk-in, and web are untracked. No pipeline, no conversion data, no follow-up system.</div></div>
+      <div class="gap-item"><div class="gap-item-label">Data · Critical</div><div class="gap-item-text">Days-to-sale by source and vehicle type doesn't exist in any system. The highest-leverage operational metric is invisible.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">IDMS Utilization · High</div><div class="gap-item-text">Google Sheets running parallel to IDMS is a symptom: the DMS reporting module isn't configured to answer the questions the owner is actually asking.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Flooring · High</div><div class="gap-item-text">NextGear and IDMS are not connected. Holding cost per unit per day cannot be viewed alongside operational or sales data.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Communications · High</div><div class="gap-item-text">All inbound phone and text activity is untracked. Revenue-generating conversations leave no record and cannot be measured, managed, or handed off.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Marketing Attribution · Medium</div><div class="gap-item-text">AutoTrader lead data and website analytics exist but are not connected to IDMS sales outcomes. Marketing spend cannot be evaluated against results.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: DATA FLOW -->
+<div class="tab-panel" id="tab-dataflow">
+  <div class="section-header">
+    <div class="eyebrow">Current State · Information Architecture</div>
+    <h2>Data Flow Diagram</h2>
+    <p>How information enters the business, where it lives, how it is processed, and what decisions it drives. Dead ends represent data that is captured but never connected to a decision.</p>
+  </div>
+
+  <div class="dfd-wrap">
+    <div class="dfd-header"><span>Data Sources → Storage → Processing → Decisions</span><span class="state-badge">Current State</span></div>
+    <div class="dfd-cols">
+      <div class="dfd-col">
+        <div class="dfd-col-header">Data Sources</div>
+        <div class="dfd-node source"><div class="dfd-node-title">Auction Purchase</div><div class="dfd-node-sub">Vehicle, price, source type</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node source"><div class="dfd-node-title">Trade-In</div><div class="dfd-node-sub">Vehicle, condition, value</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node source"><div class="dfd-node-title">Customer Inquiry</div><div class="dfd-node-sub">Phone · walk-in · web form</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node source"><div class="dfd-node-title">Vehicle Sale</div><div class="dfd-node-sub">Deal terms · GPU · unit</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node source"><div class="dfd-node-title">NextGear Loan</div><div class="dfd-node-sub">Per-unit carrying cost · days held</div></div>
+      </div>
+      <div class="dfd-col">
+        <div class="dfd-col-header">Where It's Stored</div>
+        <div class="dfd-node store"><div class="dfd-node-title">IDMS</div><div class="dfd-node-sub">Inventory · deals · GPU · titles · F&I</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node dead"><div class="dfd-node-title">Gmail + Memory</div><div class="dfd-node-sub">Lead details — no system capture</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node store"><div class="dfd-node-title">Google Sheets</div><div class="dfd-node-sub">Ad hoc tracking — not standardized</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node dead"><div class="dfd-node-title">Not Captured</div><div class="dfd-node-sub">Days-to-sale not in any system</div></div>
+        <div class="dfd-arrow">↓</div>
+        <div class="dfd-node dead"><div class="dfd-node-title">NextGear Portal</div><div class="dfd-node-sub">Isolated — no connection to IDMS or ops data</div></div>
+      </div>
+      <div class="dfd-col">
+        <div class="dfd-col-header">How It's Processed</div>
+        <div class="dfd-node"><div class="dfd-node-title">Manual IDMS Report</div><div class="dfd-node-sub">Owner pulls weekly — units &amp; GPU only</div></div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ Lead data never processed — no system to enter it into</div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-node"><div class="dfd-node-title">Owner Review</div><div class="dfd-node-sub">GPU &amp; units eyeballed — no trend analysis</div></div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ Turn-time by vehicle type never calculated — biggest operational blind spot</div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ Holding cost never modeled against margin — floorplan drag invisible</div>
+      </div>
+      <div class="dfd-col">
+        <div class="dfd-col-header">Decisions It Drives</div>
+        <div class="dfd-node"><div class="dfd-node-title">Units &amp; GPU Awareness</div><div class="dfd-node-sub">Reactive — no forward-looking signal</div></div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ No buying filter — acquisition by instinct and auction availability</div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ No recon priority logic — vendor unmanaged and unaccountable</div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ No lead conversion tracking — sales funnel completely invisible</div>
+        <div class="dfd-arrow broken">↓</div>
+        <div class="dfd-gap">⚠ Budget follows last year — no connection to strategy, data, or opportunity</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-summary">
+    <div class="gap-summary-title">Cross-System Signal — P5 × R5 × D5</div>
+    <div class="gap-grid">
+      <div class="gap-item"><div class="gap-item-label">Alignment · Critical</div><div class="gap-item-text">The recon bottleneck is named from three angles simultaneously — process constraint (P5), resource drain (R5), and data blind spot (D5) — but without a strategy defining which inventory to win in, there is no forcing function to fix it.</div></div>
+      <div class="gap-item"><div class="gap-item-label">Data Dead End · Critical</div><div class="gap-item-text">Enough data exists across IDMS, NextGear, and Google Sheets to solve the problem. It is never assembled. The insight is in the data — it is just never connected.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Decision Loop · High</div><div class="gap-item-text">GPU is tracked weekly with real discipline. Without turn-time data alongside it, GPU alone cannot tell you which vehicles to prioritize buying or which recon jobs to push first.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Capital Flow · High</div><div class="gap-item-text">NextGear and IDMS live in separate systems. Every strong buying month silently accelerates the cash drag from recon delays — and the numbers never show it.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: ORG & BUDGET -->
+<div class="tab-panel" id="tab-orgbudget">
+  <div class="section-header">
+    <div class="eyebrow">Current State · People &amp; Resources</div>
+    <h2>Organization &amp; Budget</h2>
+    <p>Crestline's current structure reflects a business that grew organically without deliberate organizational design. Roles have accumulated around the owner rather than being architected around strategy. Budget allocation follows the prior year rather than forward priorities.</p>
+  </div>
+
+  <div class="org-wrap">
+    <div class="org-header">
+      <span>Organizational Structure · 14 Employees</span>
+      <span class="state-badge">Current State</span>
+    </div>
+
+    <svg width="100%" viewBox="0 0 960 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+
+      <!-- OWNER -->
+      <rect x="380" y="10" width="200" height="60" rx="6" fill="rgba(193,127,36,0.1)" stroke="#c17f24" stroke-width="1.5"/>
+      <text x="480" y="36" text-anchor="middle" fill="#e09b3d" font-size="12" font-weight="600">Owner</text>
+      <text x="480" y="54" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Strategy · Buying · Finance · Reporting</text>
+
+      <!-- Vertical from owner -->
+      <line x1="480" y1="70" x2="480" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <!-- Horizontal span L2 -->
+      <line x1="100" y1="100" x2="860" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- Drops to L2 nodes -->
+      <line x1="100" y1="100" x2="100" y2="120" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <line x1="310" y1="100" x2="310" y2="120" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <line x1="560" y1="100" x2="560" y2="120" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <line x1="760" y1="100" x2="760" y2="120" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- GSM -->
+      <rect x="10" y="120" width="180" height="60" rx="6" fill="rgba(0,168,174,0.07)" stroke="#00a8ae" stroke-width="1"/>
+      <text x="100" y="146" text-anchor="middle" fill="#00a8ae" font-size="11" font-weight="600">Gen. Sales Manager</text>
+      <text x="100" y="162" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Ops · Sales oversight · Recon</text>
+
+      <!-- SALES STAFF header -->
+      <rect x="210" y="120" width="200" height="60" rx="6" fill="#1a2e42" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="310" y="146" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="600">Sales Staff</text>
+      <text x="310" y="162" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Floor · Phone · Walk-in</text>
+
+      <!-- OFFICE / F&I -->
+      <rect x="460" y="120" width="200" height="60" rx="6" fill="#1a2e42" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="560" y="146" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="600">Office / F&amp;I</text>
+      <text x="560" y="162" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Titles · Deals · Bookkeeping</text>
+
+      <!-- RECEPTIONIST -->
+      <rect x="670" y="120" width="180" height="60" rx="6" fill="#1a2e42" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="760" y="146" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="600">Receptionist</text>
+      <text x="760" y="162" text-anchor="middle" fill="#7a8fa6" font-size="9" font-family="'DM Mono',monospace">Phones · Walk-ins · Scheduling</text>
+
+      <!-- Drops to individual bubbles -->
+      <!-- From GSM -->
+      <line x1="100" y1="180" x2="100" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- GSM bubble (1) -->
+      <circle cx="100" cy="230" r="22" fill="#1a2e42" stroke="#00a8ae" stroke-width="1"/>
+      <text x="100" y="234" text-anchor="middle" fill="#00a8ae" font-size="9" font-weight="600">GSM</text>
+
+      <!-- From Sales Staff (4 people) -->
+      <line x1="310" y1="180" x2="310" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="210" y1="210" x2="410" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="210" y1="210" x2="210" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="277" y1="210" x2="277" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="344" y1="210" x2="344" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="410" y1="210" x2="410" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <circle cx="210" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="210" y="252" text-anchor="middle" fill="#ffffff" font-size="9">Sales 1</text>
+      <circle cx="277" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="277" y="252" text-anchor="middle" fill="#ffffff" font-size="9">Sales 2</text>
+      <circle cx="344" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="344" y="252" text-anchor="middle" fill="#ffffff" font-size="9">Sales 3</text>
+      <circle cx="410" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="410" y="252" text-anchor="middle" fill="#ffffff" font-size="9">Sales 4</text>
+
+      <!-- From Office / F&I (2 people) -->
+      <line x1="560" y1="180" x2="560" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="510" y1="210" x2="610" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="510" y1="210" x2="510" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="610" y1="210" x2="610" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <circle cx="510" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="510" y="248" text-anchor="middle" fill="#ffffff" font-size="9">Office</text>
+      <text x="510" y="260" text-anchor="middle" fill="#ffffff" font-size="9">Mgr</text>
+      <circle cx="610" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="610" y="248" text-anchor="middle" fill="#ffffff" font-size="9">F&amp;I</text>
+      <text x="610" y="260" text-anchor="middle" fill="#ffffff" font-size="9">Clerk</text>
+
+      <!-- From Receptionist (1) -->
+      <line x1="760" y1="180" x2="760" y2="225" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <circle cx="760" cy="248" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="760" y="252" text-anchor="middle" fill="#ffffff" font-size="9">Recept.</text>
+
+      <!-- LOT / PORTER (3 people) from GSM -->
+      <line x1="100" y1="252" x2="100" y2="310" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="40" y1="310" x2="160" y2="310" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="40" y1="310" x2="40" y2="325" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="100" y1="310" x2="100" y2="325" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="160" y1="310" x2="160" y2="325" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <circle cx="40" cy="348" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <text x="40" y="348" text-anchor="middle" fill="#7a8fa6" font-size="9">Lot 1</text>
+      <text x="40" y="360" text-anchor="middle" fill="#7a8fa6" font-size="8">Porter</text>
+      <circle cx="100" cy="348" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <text x="100" y="348" text-anchor="middle" fill="#7a8fa6" font-size="9">Lot 2</text>
+      <text x="100" y="360" text-anchor="middle" fill="#7a8fa6" font-size="8">Porter</text>
+      <circle cx="160" cy="348" r="22" fill="#1a2e42" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <text x="160" y="348" text-anchor="middle" fill="#7a8fa6" font-size="9">Lot 3</text>
+      <text x="160" y="360" text-anchor="middle" fill="#7a8fa6" font-size="8">Porter</text>
+
+      <!-- EXTERNAL VENDORS separator -->
+      <line x1="0" y1="420" x2="960" y2="420" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="6,4"/>
+      <text x="480" y="415" text-anchor="middle" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace" letter-spacing="0.12em">EXTERNAL VENDORS</text>
+
+      <!-- Recon Vendor -->
+      <rect x="140" y="430" width="160" height="42" rx="6" fill="rgba(192,57,43,0.06)" stroke="#e74c3c" stroke-width="1" stroke-dasharray="5,3"/>
+      <text x="220" y="449" text-anchor="middle" fill="#e74c3c" font-size="11" font-weight="500">Recon Vendor</text>
+      <text x="220" y="463" text-anchor="middle" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">External · Mechanical Recon</text>
+
+      <!-- AutoTrader -->
+      <rect x="400" y="430" width="160" height="42" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="5,3"/>
+      <text x="480" y="449" text-anchor="middle" fill="#c0c8d4" font-size="11" font-weight="500">AutoTrader</text>
+      <text x="480" y="463" text-anchor="middle" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">External · Lead Channel</text>
+
+      <!-- NextGear -->
+      <rect x="660" y="430" width="160" height="42" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="5,3"/>
+      <text x="740" y="449" text-anchor="middle" fill="#c0c8d4" font-size="11" font-weight="500">NextGear Capital</text>
+      <text x="740" y="463" text-anchor="middle" fill="#7a8fa6" font-size="8" font-family="'DM Mono',monospace">External · Floorplan Financing</text>
+
+    </svg>
+
+  </div><!-- org-wrap -->
+
+  <div class="gap-summary" style="margin-bottom:40px;">
+    <div class="gap-summary-title">Organizational Gaps</div>
+    <div class="gap-grid">
+      <div class="gap-item"><div class="gap-item-label">Owner Load · Critical</div><div class="gap-item-text">The owner is the de facto strategist, buyer, finance manager, and reporting analyst. The business ceiling is whoever the owner can be on their best day — and that ceiling is lower than the business's potential.</div></div>
+      <div class="gap-item"><div class="gap-item-label">Recon Ownership · Critical</div><div class="gap-item-text">No one internally owns the recon process. The GSM coordinates informally but has no defined accountability, no performance metrics, and no authority to enforce vendor SLA compliance.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Lead Management · High</div><div class="gap-item-text">No dedicated role for inbound lead response or follow-up. The receptionist absorbs inbound call volume without a system to support them. Sales staff follow up informally and inconsistently.</div></div>
+      <div class="gap-item amber"><div class="gap-item-label">Data Ownership · High</div><div class="gap-item-text">No one is responsible for reporting or operational analytics. The owner pulls weekly numbers manually — consuming strategic thinking time and producing limited insight.</div></div>
+    </div>
+  </div>
+
+  <!-- BUDGET TABLE -->
+  <div class="org-header" style="margin-bottom:16px;">
+    <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">Budget Allocation · Current vs. Future State (Directional)</span>
+  </div>
+
+  <div class="budget-wrap">
+    <div class="budget-title">
+      <span>Estimated Allocation as % of Operating Budget</span>
+      <span style="font-size:8px;color:var(--text-muted);">Future state is directional — owner decisions on marketing and staffing will affect final numbers</span>
+    </div>
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th style="width:30%;">Category</th>
+          <th style="width:12%;">Current</th>
+          <th style="width:12%;">Future</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="budget-category">Personnel</div>
+            <div class="budget-note">Salaries, commissions, benefits</div>
+          </td>
+          <td><span class="pct-current">50%</span></td>
+          <td><span class="pct-same">50%</span></td>
+          <td><div class="budget-note">Role realignment, not headcount reduction. Voice agent frees receptionist capacity for higher-value work — owner decides how that capacity is deployed.</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="budget-category">Inventory / Floorplan</div>
+            <div class="budget-note">Vehicle acquisition + NextGear interest</div>
+          </td>
+          <td><span class="pct-current">25%</span></td>
+          <td><span class="pct-future">22%</span></td>
+          <td><div class="budget-note">Recon SLA reduces average days-to-sale. Shorter hold time means less floorplan interest per unit. Same capital working harder across more turns.</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="budget-category">Marketing</div>
+            <div class="budget-note">AutoTrader, Facebook, website</div>
+          </td>
+          <td><span class="pct-current">10%</span></td>
+          <td><span class="pct-same">10%*</span></td>
+          <td><div class="budget-note">*Owner decision point. Better lead conversion means the same spend produces more closed deals — or the efficiency gain can be reinvested in higher lead volume. Both are valid.</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="budget-category">Facilities / Overhead</div>
+            <div class="budget-note">Lot, utilities, insurance, admin</div>
+          </td>
+          <td><span class="pct-current">10%</span></td>
+          <td><span class="pct-same">9%</span></td>
+          <td><div class="budget-note">Minor optimization as operational efficiency improves. No structural change expected.</div></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="budget-category">Technology &amp; Tools</div>
+            <div class="budget-note">IDMS, Google Workspace, listings</div>
+          </td>
+          <td><span class="pct-current">5%</span></td>
+          <td><span class="pct-future">9%</span></td>
+          <td><div class="budget-note">IDMS CRM module activation, voice agent, call tracking, and Phase 2 reporting layer. Increase is modest relative to the operational gains expected across inventory, sales, and conversion.</div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="owner-note">
+    <strong>On marketing spend:</strong> Better conversion efficiency does not automatically mean reduced spend. Once lead-to-sale conversion is measurable, the owner can make an informed decision: hold spend constant and capture more margin, or reinvest efficiency gains into higher lead volume. PDL surfaces the decision — the owner makes it.
+  </div>
+
+</div>
+
+<div class="disclaimer">
+  * All data in this assessment is synthetic — developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.
+  <br>© Positive Deviant Labs · positivedeviantlabs.com
+</div>
+
+<script>
+  function showTab(tab, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crestline Auto Group — Strategic Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e42;
+    --navy-light: #243d56;
+    --teal: #004d50;
+    --teal-accent: #00a8ae;
+    --amber: #c17f24;
+    --amber-light: #e09b3d;
+    --green: #1a7a4a;
+    --green-light: #27ae60;
+    --white: #ffffff;
+    --text-muted: #7a8fa6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    font-size: 13px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 44px 56px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal-accent);
+    margin-bottom: 10px;
+  }
+
+  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 0.04em; line-height: 1; }
+  .header .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 7px; font-weight: 400; }
+
+  .roadmap-badge {
+    display: inline-block; background: rgba(0,77,80,0.4); color: var(--teal-accent);
+    font-family: 'DM Mono', monospace; font-size: 8px; padding: 2px 10px;
+    border-radius: 2px; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--teal-accent);
+  }
+
+  /* COMMITMENT NOTE */
+  .commitment-note {
+    margin: 28px 56px 0;
+    padding: 14px 18px;
+    background: rgba(193,127,36,0.07);
+    border: 1px solid rgba(193,127,36,0.18);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .commitment-note strong { color: var(--amber-light); font-weight: 500; }
+
+  /* PHASE TIMELINE */
+  .timeline-wrap {
+    padding: 40px 56px 0;
+  }
+
+  .timeline-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .timeline-bar {
+    display: flex;
+    height: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .timeline-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .timeline-segment.p1 { background: rgba(0,168,174,0.2); color: var(--teal-accent); border: 1px solid rgba(0,168,174,0.3); width: 45%; }
+  .timeline-segment.gap { background: rgba(255,255,255,0.03); color: var(--text-muted); width: 10%; font-size: 8px; }
+  .timeline-segment.p2 { background: rgba(193,127,36,0.15); color: var(--amber-light); border: 1px solid rgba(193,127,36,0.25); width: 45%; }
+
+  .timeline-labels {
+    display: flex;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+  .timeline-labels .l1 { width: 45%; }
+  .timeline-labels .lgap { width: 10%; }
+  .timeline-labels .l2 { width: 45%; text-align: right; }
+
+  /* PHASE SECTION */
+  .phase-section {
+    padding: 40px 56px;
+  }
+
+  .phase-section + .phase-section {
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .phase-label-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .phase-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 1;
+    opacity: 0.15;
+  }
+
+  .phase-number.p1 { color: var(--teal-accent); }
+  .phase-number.p2 { color: var(--amber-light); }
+
+  .phase-meta { flex: 1; }
+
+  .phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .phase-title.p1 { color: var(--teal-accent); }
+  .phase-title.p2 { color: var(--amber-light); }
+
+  .phase-timing {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .phase-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.6;
+    max-width: 580px;
+  }
+
+  /* INITIATIVE CARDS */
+  .initiatives { display: flex; flex-direction: column; gap: 12px; }
+
+  .initiative {
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 4px 1fr;
+  }
+
+  .initiative-stripe { background: var(--teal-accent); }
+  .initiative-stripe.amber { background: var(--amber-light); }
+  .initiative-stripe.green { background: var(--green-light); }
+
+  .initiative-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 140px 140px;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .initiative-main {}
+
+  .initiative-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .initiative-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .initiative-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .initiative-meta-col { padding-top: 2px; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .meta-value {
+    font-size: 11px;
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .meta-value.teal { color: var(--teal-accent); }
+  .meta-value.amber { color: var(--amber-light); }
+  .meta-value.green { color: var(--green-light); }
+
+  .spdr-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+
+  .spdr-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+
+  .spdr-tag.s { background: rgba(231,76,60,0.1); border-color: rgba(231,76,60,0.3); color: #e74c3c; }
+  .spdr-tag.p { background: rgba(224,155,61,0.1); border-color: rgba(224,155,61,0.3); color: var(--amber-light); }
+  .spdr-tag.d { background: rgba(0,168,174,0.1); border-color: rgba(0,168,174,0.3); color: var(--teal-accent); }
+  .spdr-tag.r { background: rgba(39,174,96,0.1); border-color: rgba(39,174,96,0.3); color: var(--green-light); }
+
+  /* SUCCESS METRICS */
+  .success-wrap {
+    margin: 0 56px 40px;
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .success-header {
+    padding: 14px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .success-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .success-item {
+    padding: 18px 24px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .success-item:last-child { border-right: none; }
+
+  .success-phase {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .success-phase.p1 { color: var(--teal-accent); }
+  .success-phase.p2 { color: var(--amber-light); }
+  .success-phase.both { color: var(--green-light); }
+
+  .success-metric {
+    font-size: 12px;
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .success-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    margin: 0 56px;
+    padding: 20px 0 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="eyebrow">PDL · Strategic Roadmap · Synthetic Case Study</div>
+    <h1>Crestline Auto Group</h1>
+    <div class="subtitle">Akron/Canton Metro · Independent Used Car Dealer · 14 employees · $6.8M revenue</div>
+  </div>
+  <span class="roadmap-badge">Strategic Roadmap</span>
+</div>
+
+<!-- COMMITMENT NOTE -->
+<div class="commitment-note">
+  <strong>A note on timing:</strong> Phase 1 is achievable in 90–120 days. The range depends on one thing more than any other — owner and GSM availability and decision velocity. PDL works in tandem with Crestline's team, not instead of it. The roadmap moves at the speed of commitment on both sides.
+</div>
+
+<!-- TIMELINE BAR -->
+<div class="timeline-wrap">
+  <div class="timeline-header">Roadmap Overview</div>
+  <div class="timeline-bar">
+    <div class="timeline-segment p1">Phase 1 · Foundation</div>
+    <div class="timeline-segment gap">→</div>
+    <div class="timeline-segment p2">Phase 2 · Amplification</div>
+  </div>
+  <div class="timeline-labels">
+    <div class="l1">90–120 days · Strategy, systems, process</div>
+    <div class="lgap"></div>
+    <div class="l2">90–180 days after Phase 1 stabilizes · AI, reporting layer</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 1
+══════════════════════════════════════ -->
+<div class="phase-section">
+  <div class="phase-label-row">
+    <div class="phase-number p1">1</div>
+    <div class="phase-meta">
+      <div class="phase-title p1">Foundation</div>
+      <div class="phase-timing">90–120 Days · Strategy · Systems · Process</div>
+      <div class="phase-desc">Fix what's broken, activate what's already paid for, and build the data foundation that everything else depends on. No new tools until existing tools are working.</div>
+    </div>
+  </div>
+
+  <div class="initiatives">
+
+    <div class="initiative">
+      <div class="initiative-stripe"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 01</div>
+          <div class="initiative-title">Define and Document the Business Strategy</div>
+          <div class="initiative-desc">Facilitate a structured strategy session with the owner to define the customer segment, how-to-win logic, and inventory priorities for the Akron/Canton market. Output: a one-page strategy document that anchors every downstream decision — buying, pricing, marketing, and budget allocation.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value teal">Owner + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Weeks 1–2</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag s">S</span>
+            <span class="spdr-tag d">D</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Clear segment definition. Every major decision has an anchor. Buying criteria shift from instinct to strategy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 02</div>
+          <div class="initiative-title">Establish Recon SLA and Internal Handoff Process</div>
+          <div class="initiative-desc">Define and document a cycle-time target for the recon vendor based on vehicle segment and strategy. Assign GSM as internal owner. Create a formal handoff process from acquisition to vendor delivery. Set escalation triggers for repeated SLA misses. Track recon cycle time in IDMS from day one.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value teal">GSM + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Weeks 2–4</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag p">P</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Three-year bottleneck has a system and an owner. Recon delays become manageable rather than chronic. Holding cost begins to decrease per unit.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 03</div>
+          <div class="initiative-title">Configure IDMS Custom Reporting</div>
+          <div class="initiative-desc">Work with the Office Manager to configure IDMS reporting for the metrics that actually matter: days-to-sale by acquisition source and vehicle type, true GPU with holding cost factored in, recon cycle time against SLA target, and a weekly KPI summary for owner and GSM review. Retire Google Sheets workarounds as each report goes live.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value teal">Office Mgr + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Weeks 3–6</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag d">D</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Owner and GSM have a weekly dashboard that answers the questions they've been digging through spreadsheets to find. Google Sheets retired as an operational tool.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 04</div>
+          <div class="initiative-title">Activate IDMS CRM — Lead Capture and Pipeline</div>
+          <div class="initiative-desc">Activate the IDMS CRM module and configure it for Crestline's sales process. Set up lead sources (phone, web, walk-in, AutoTrader, Facebook). Train sales staff and Lead Coordinator on daily CRM use. Configure pipeline stages and assign ownership. Every lead captured from activation date forward — no exceptions.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value teal">Lead Coord. + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Weeks 4–10</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag s">S</span>
+            <span class="spdr-tag p">P</span>
+            <span class="spdr-tag d">D</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Every lead is captured and tracked. Sales funnel is visible for the first time. Lead Coordinator has a system to manage follow-up instead of relying on memory and Gmail.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 05</div>
+          <div class="initiative-title">Configure Follow-Up and Post-Sale Workflows</div>
+          <div class="initiative-desc">Build automated follow-up sequences in IDMS CRM for unconverted leads — timed outreach at 24 hours, 72 hours, and 7 days. Configure post-sale workflow: satisfaction check at 7 days, review solicitation at 14 days (Google and Facebook), and re-engagement at 6 and 12 months. Establish NPS tracking process.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value teal">Lead Coord. + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Weeks 8–12</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag p">P</span>
+            <span class="spdr-tag d">D</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">No lead goes cold without a structured attempt. Post-sale experience is consistent. Review volume increases. Repeat buyer tracking begins accumulating data.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe amber"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 06</div>
+          <div class="initiative-title">Launch AI Thought Partner Pilot</div>
+          <div class="initiative-desc">Provide whole-org access to a frontier AI model (ChatGPT Teams or Claude — determined by owner preference and Google Workspace alignment). Deliver basic training on practical use cases relevant to each role. Run a 60-90 day pilot with no mandated use cases — adoption is organic. At the end of the pilot, collect documented use cases from users who found value. Use cases inform Phase 2 AI planning.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value amber">Owner sponsors<br>Lead Coord. manages</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Weeks 6–16</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag s">S</span>
+            <span class="spdr-tag p">P</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">At least 3 team members with documented use cases that save meaningful time or improve decision quality. Owner has used AI as a thought partner on at least one real strategic question.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 2
+══════════════════════════════════════ -->
+<div class="phase-section">
+  <div class="phase-label-row">
+    <div class="phase-number p2">2</div>
+    <div class="phase-meta">
+      <div class="phase-title p2">Amplification</div>
+      <div class="phase-timing">90–180 Days After Phase 1 Stabilizes · AI Layer · Buying Intelligence · Reporting</div>
+      <div class="phase-desc">Phase 2 starts when Phase 1 is stable — not on a fixed calendar date. The data foundation built in Phase 1 makes Phase 2 possible. AI tools built on top of bad data produce bad outputs faster. The sequence is intentional.</div>
+    </div>
+  </div>
+
+  <div class="initiatives">
+
+    <div class="initiative">
+      <div class="initiative-stripe amber"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 07</div>
+          <div class="initiative-title">Build the AI Buying Filter</div>
+          <div class="initiative-desc">Using 60+ days of live days-to-sale data from Phase 1, build a simple scoring model that evaluates auction acquisition opportunities by projected turn-time and expected GPU by vehicle type and source. Output: a one-page decision rule the owner uses at auction to score opportunities against segment targets. Refined over time as data accumulates.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value amber">Owner + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Phase 2 · Weeks 1–4</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag s">S</span>
+            <span class="spdr-tag d">D</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Buying decisions informed by turn-time and margin data rather than instinct and price availability. Capital flows toward fastest-turning, highest-margin segments.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe amber"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 08</div>
+          <div class="initiative-title">Deploy Lindy Voice Agent</div>
+          <div class="initiative-desc">Deploy Lindy to handle inbound calls — qualifying leads, answering inventory questions, and scheduling appointments. Configure outbound follow-up sequences for unconverted leads who haven't responded to CRM workflows. Integrate call records into IDMS CRM. Trigger: confirmed by Phase 1 pilot data that inbound call volume and lead follow-up are the right problems to address with AI — not assumed.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value amber">Lead Coord. + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Phase 2 · Weeks 4–10</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag p">P</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Inbound leads answered consistently regardless of staff availability. Outbound follow-up throughput increases without additional headcount. Lead Coordinator capacity shifts to higher-value CRM management.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-stripe amber"></div>
+      <div class="initiative-body">
+        <div class="initiative-main">
+          <div class="initiative-number">Initiative 09</div>
+          <div class="initiative-title">Evaluate and Activate Looker Studio (If Needed)</div>
+          <div class="initiative-desc">Assess whether IDMS custom reporting is meeting the owner and GSM's analytical needs. If reporting gaps exist — particularly around cross-system views combining IDMS and NextGear data — activate Looker Studio connected to IDMS exports and NextGear reconciliation data via Google Sheets bridge. Free tool, low implementation overhead. Only activated if IDMS ceiling is reached.</div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Owner</div>
+          <div class="meta-value amber">Office Mgr + PDL</div>
+          <div class="meta-label">Timing</div>
+          <div class="meta-value">Phase 2 · If needed</div>
+          <div class="meta-label">SPDR Systems</div>
+          <div class="spdr-tags">
+            <span class="spdr-tag d">D</span>
+            <span class="spdr-tag r">R</span>
+          </div>
+        </div>
+        <div class="initiative-meta-col">
+          <div class="meta-label">Expected Outcome</div>
+          <div class="meta-value green">Strategic dashboard connecting inventory turn, holding cost, lead conversion, and marketing attribution in a single view. Owner makes resource allocation decisions from one screen.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUCCESS METRICS -->
+<div class="success-wrap">
+  <div class="success-header">
+    <span>What Success Looks Like</span>
+    <span style="font-size:8px;">Measured at the end of each phase</span>
+  </div>
+  <div class="success-grid">
+    <div class="success-item">
+      <div class="success-phase p1">Phase 1 · Operations</div>
+      <div class="success-metric">Recon cycle time reduced by target %</div>
+      <div class="success-note">SLA target set in Initiative 02 — measured against baseline established at engagement start.</div>
+    </div>
+    <div class="success-item">
+      <div class="success-phase p1">Phase 1 · Sales</div>
+      <div class="success-metric">100% of leads captured in IDMS CRM</div>
+      <div class="success-note">No lead enters and exits through memory or Gmail. Pipeline visible. Conversion rate tracked by source for the first time.</div>
+    </div>
+    <div class="success-item">
+      <div class="success-phase p1">Phase 1 · AI</div>
+      <div class="success-metric">3+ documented AI use cases from the team</div>
+      <div class="success-note">At least 3 team members identify use cases that save meaningful time or improve a decision. Owner uses AI on at least one real strategic question.</div>
+    </div>
+    <div class="success-item">
+      <div class="success-phase p2">Phase 2 · Buying</div>
+      <div class="success-metric">Buying decisions scored against data</div>
+      <div class="success-note">AI buying filter in use at auction. Capital allocation by vehicle segment is measurable and tied to turn-time and GPU performance.</div>
+    </div>
+    <div class="success-item">
+      <div class="success-phase p2">Phase 2 · Reputation</div>
+      <div class="success-metric">Review volume and NPS trending up</div>
+      <div class="success-note">Post-sale workflow driving consistent review solicitation. Google Business Profile and Facebook ratings growing. Repeat buyer rate tracked in IDMS.</div>
+    </div>
+    <div class="success-item">
+      <div class="success-phase both">Both Phases · Margin</div>
+      <div class="success-metric">True GPU visible and improving</div>
+      <div class="success-note">Holding cost factored into margin reporting. Recon SLA and buying filter working together to reduce cost per unit and improve per-segment profitability.</div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer" style="margin-top:40px;">
+  * All data in this roadmap is synthetic — developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.
+  <br>© Positive Deviant Labs · positivedeviantlabs.com
+</div>
+
+</body>
+</html>
