@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crestline Auto Group — Marketing Strategy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #0d1b2a;
+  --navy-mid:    #1a2e42;
+  --navy-light:  #243d56;
+  --navy-card:   #1e3448;
+  --amber:       #c17f24;
+  --amber-light: #e09b3d;
+  --amber-dim:   rgba(193,127,36,0.15);
+  --amber-border:rgba(193,127,36,0.3);
+  --teal:        #004d50;
+  --teal-accent: #00a8ae;
+  --teal-dim:    rgba(0,168,174,0.12);
+  --teal-border: rgba(0,168,174,0.3);
+  --text-primary:#e8e0d4;
+  --text-muted:  #8fa3b0;
+  --text-dim:    #5a7080;
+  --border:      rgba(193,127,36,0.18);
+  --border-light:rgba(255,255,255,0.06);
+  --font: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--navy);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.page-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(193,127,36,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  margin-bottom: 6px;
+}
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.header-title span { color: var(--amber-light); }
+.header-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.meta-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+}
+.meta-dot.teal { background: var(--teal-accent); }
+.meta-dot.green { background: #4caf82; }
+.header-score {
+  position: absolute;
+  top: 24px; right: 40px;
+  text-align: right;
+}
+.score-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--amber-light);
+  line-height: 1;
+}
+.score-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.score-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  border: 1px solid var(--amber-border);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex;
+  background: var(--navy-mid);
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+  gap: 2px;
+  overflow-x: auto;
+}
+.tab-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--amber-light); background: var(--amber-dim); }
+.tab-btn.active {
+  color: var(--amber-light);
+  border-bottom-color: var(--amber);
+  background: var(--amber-dim);
+}
+.tab-icon { font-size: 14px; }
+
+/* ── PANEL WRAPPER ── */
+.tab-panel { display: none; padding: 32px 40px 48px; }
+.tab-panel.active { display: block; }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.section-title-group {}
+.section-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  margin-bottom: 4px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.section-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ── LAYOUT HELPERS ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.full-width { margin-bottom: 24px; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+}
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--amber-light);
+  margin-bottom: 10px;
+}
+.card-body {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+.card.teal-accent { border-color: var(--teal-border); }
+.card.amber-accent { border-color: var(--amber-border); }
+.card.highlight {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, rgba(193,127,36,0.06) 100%);
+  border-color: var(--amber-border);
+}
+
+/* ── STRATEGY CASCADE ── */
+.cascade-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.cascade-item:last-child { border-bottom: none; }
+.cascade-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber-light);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.cascade-content {}
+.cascade-q {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.cascade-a {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+.cascade-a strong { color: var(--amber-light); font-weight: 600; }
+
+/* ── TARGET CUSTOMER ── */
+.persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.persona-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px;
+}
+.persona-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.persona-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+}
+.persona-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.persona-row-label {
+  color: var(--text-dim);
+  font-weight: 500;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.persona-row-val { color: var(--text-muted); }
+
+/* ── MESSAGING FRAMEWORK ── */
+.message-block {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.message-header {
+  background: var(--navy-mid);
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.message-channel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+}
+.message-type {
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.message-body { padding: 14px 18px; }
+.message-primary {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-style: italic;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.proof-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.proof-pill {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--navy-mid);
+  border: 1px solid var(--border-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── CHANNEL TABLE ── */
+.channel-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+.channel-table th {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--navy-mid);
+}
+.channel-table td {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+}
+.channel-table tr:last-child td { border-bottom: none; }
+.channel-table tr:hover td { background: rgba(255,255,255,0.02); }
+.channel-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.priority-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+.priority-high {
+  color: var(--amber-light);
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-border);
+}
+.priority-medium {
+  color: var(--teal-accent);
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+}
+.priority-low {
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-light);
+}
+
+/* ── BUDGET BUCKETS ── */
+.budget-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+.budget-bucket {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px;
+  text-align: center;
+}
+.budget-bucket.high { border-top: 3px solid var(--amber); }
+.budget-bucket.medium { border-top: 3px solid var(--teal-accent); }
+.budget-bucket.low { border-top: 3px solid var(--text-dim); }
+.bucket-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.budget-bucket.high .bucket-label { color: var(--amber-light); }
+.budget-bucket.medium .bucket-label { color: var(--teal-accent); }
+.budget-bucket.low .bucket-label { color: var(--text-dim); }
+.bucket-items {
+  text-align: left;
+  margin-top: 10px;
+}
+.bucket-item {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.bucket-item:last-child { border-bottom: none; }
+.bucket-item::before {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+
+/* ── MARTECH ── */
+.martech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.martech-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+}
+.martech-icon {
+  width: 36px; height: 36px;
+  border-radius: 6px;
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.martech-icon.teal {
+  background: var(--teal-dim);
+  border-color: var(--teal-border);
+}
+.martech-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.martech-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.martech-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-border);
+  padding: 1px 6px;
+  border-radius: 2px;
+  margin-bottom: 4px;
+}
+.martech-tag.existing {
+  color: var(--teal-accent);
+  background: var(--teal-dim);
+  border-color: var(--teal-border);
+}
+
+/* ── ROADMAP ── */
+.phase-section { margin-bottom: 36px; }
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 14px 20px;
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.phase-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.phase-1 .phase-pill { color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border); }
+.phase-2 .phase-pill { color: var(--teal-accent); background: var(--teal-dim); border: 1px solid var(--teal-border); }
+.phase-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.phase-timing {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+.phase-dep {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.initiative {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+}
+.initiative-num {
+  width: 40px; height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.phase-1 .initiative-num { background: var(--amber-dim); border: 1px solid var(--amber-border); color: var(--amber-light); }
+.phase-2 .initiative-num { background: var(--teal-dim); border: 1px solid var(--teal-border); color: var(--teal-accent); }
+.initiative-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.initiative-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.initiative-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.meta-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--navy-mid);
+  border: 1px solid var(--border-light);
+  padding: 2px 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.meta-tag .tag-label { color: var(--text-muted); }
+
+/* ── INSIGHT BOX ── */
+.insight-box {
+  background: linear-gradient(135deg, rgba(193,127,36,0.08) 0%, rgba(0,77,80,0.08) 100%);
+  border: 1px solid var(--amber-border);
+  border-left: 3px solid var(--amber);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.insight-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  margin-bottom: 6px;
+}
+.insight-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ── DEPENDENCY NOTE ── */
+.dep-note {
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.dep-note-icon { color: var(--teal-accent); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+/* ── SYNTHETIC NOTE ── */
+.synthetic-note {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: italic;
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--border-light);
+  background: var(--navy-mid);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .tab-panel { padding: 20px; }
+  .page-header { padding: 20px; }
+  .header-score { position: static; text-align: left; margin-top: 12px; }
+  .two-col, .persona-grid, .martech-grid, .three-col, .budget-grid { grid-template-columns: 1fr; }
+  .initiative { grid-template-columns: 36px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="header-eyebrow">Sample Work · Marketing Strategy</div>
+  <div class="header-title"><span>Crestline Auto Group</span> — Marketing Strategy</div>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-dot"></div>Independent Used Car Dealer</div>
+    <div class="meta-item"><div class="meta-dot"></div>Akron/Canton Metro · Ohio</div>
+    <div class="meta-item"><div class="meta-dot teal"></div>14 Employees · $6.8M Revenue</div>
+    <div class="meta-item"><div class="meta-dot green"></div>Synthetic Data — Illustrative Only</div>
+  </div>
+  <div class="header-score">
+    <div class="score-num">52.2</div>
+    <div class="score-label">SPDR Score</div>
+    <div class="score-badge">Developing</div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav" role="tablist">
+  <button class="tab-btn active" role="tab" aria-selected="true" id="tab-strategy" aria-controls="panel-strategy" onclick="switchTab('strategy')">
+    <span class="tab-icon">◎</span> Marketing Strategy
+  </button>
+  <button class="tab-btn" role="tab" aria-selected="false" id="tab-channels" aria-controls="panel-channels" onclick="switchTab('channels')">
+    <span class="tab-icon">◈</span> Channels & Budget
+  </button>
+  <button class="tab-btn" role="tab" aria-selected="false" id="tab-roadmap" aria-controls="panel-roadmap" onclick="switchTab('roadmap')">
+    <span class="tab-icon">◇</span> Roadmap
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 1: MARKETING STRATEGY                -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-strategy" role="tabpanel" aria-labelledby="tab-strategy">
+
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Starting Point</div>
+      <div class="section-title">Strategy Before Marketing</div>
+      <div class="section-subtitle">Marketing work follows business strategy — not the other way around</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">Key Insight</div>
+    <div class="insight-text">Crestline had no documented marketing strategy because they had no documented business strategy. AutoTrader was the default lead channel — not a deliberate choice. Facebook Marketplace was active but informal. Reputation was building on its own, not by design. Before any marketing work could begin, the business strategy had to be written first. That's what made the rest of this possible.</div>
+  </div>
+
+  <!-- STRATEGY CASCADE -->
+  <div class="card full-width">
+    <div class="card-label">Business Strategy Cascade — Foundation for All Marketing Decisions</div>
+    <div class="cascade-item">
+      <div class="cascade-num">1</div>
+      <div class="cascade-content">
+        <div class="cascade-q">Winning Aspiration</div>
+        <div class="cascade-a"><strong>Most trusted independent used car dealer for working families in the Akron/Canton metro</strong> — reputation that earns the first sale and brings customers back.</div>
+      </div>
+    </div>
+    <div class="cascade-item">
+      <div class="cascade-num">2</div>
+      <div class="cascade-content">
+        <div class="cascade-q">Where to Play</div>
+        <div class="cascade-a">Akron/Canton metro and surrounding communities within a 60-minute drive. Target: <strong>working families and single-income buyers</strong>, $10K–$18K range, reliable daily driver, skeptical of dealerships — and willing to drive for a dealer they trust.</div>
+      </div>
+    </div>
+    <div class="cascade-item">
+      <div class="cascade-num">3</div>
+      <div class="cascade-content">
+        <div class="cascade-q">How to Win</div>
+        <div class="cascade-a"><strong>Speed to lot + reputation that compounds.</strong> Recon velocity, transparent dealing, consistent follow-up, measurable trust signals, and repeat buyers who refer others.</div>
+      </div>
+    </div>
+    <div class="cascade-item">
+      <div class="cascade-num">4</div>
+      <div class="cascade-content">
+        <div class="cascade-q">Must-Have Marketing Capabilities</div>
+        <div class="cascade-a">Lead response and follow-up discipline. Reputation management (Google, Facebook, NPS). Repeat buyer tracking. Referral program that converts satisfied buyers into active advocates.</div>
+      </div>
+    </div>
+    <div class="cascade-item">
+      <div class="cascade-num">5</div>
+      <div class="cascade-content">
+        <div class="cascade-q">Enabling Systems</div>
+        <div class="cascade-a">IDMS CRM activated for lead capture and pipeline. Post-sale follow-up automated. Weekly KPI dashboard including lead source performance and conversion rates.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TARGET CUSTOMER -->
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Target Market</div>
+      <div class="section-title">Who Crestline Is Trying to Win</div>
+      <div class="section-subtitle">Two buyer profiles — one primary, one secondary</div>
+    </div>
+  </div>
+
+  <div class="persona-grid">
+    <div class="persona-card">
+      <div class="persona-name">The Working Family Buyer</div>
+      <div class="persona-tag">Primary Target</div>
+      <div class="persona-row"><span class="persona-row-label">Budget</span><span class="persona-row-val">$10,000 – $18,000</span></div>
+      <div class="persona-row"><span class="persona-row-label">Need</span><span class="persona-row-val">Reliable daily driver — commute, kids, work</span></div>
+      <div class="persona-row"><span class="persona-row-label">Pain point</span><span class="persona-row-val">Skeptical of dealerships; past bad experiences</span></div>
+      <div class="persona-row"><span class="persona-row-label">Decision factor</span><span class="persona-row-val">Will drive further for a dealer they can trust</span></div>
+      <div class="persona-row"><span class="persona-row-label">Discovery</span><span class="persona-row-val">AutoTrader, Google search, word of mouth</span></div>
+      <div class="persona-row"><span class="persona-row-label">Win signal</span><span class="persona-row-val">Transparent pricing, fast response, no pressure</span></div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-name">The Repeat & Referral Buyer</div>
+      <div class="persona-tag" style="background:rgba(0,168,174,0.12);border-color:rgba(0,168,174,0.3);color:#00a8ae;">Secondary — High Value</div>
+      <div class="persona-row"><span class="persona-row-label">Profile</span><span class="persona-row-val">Past Crestline customer or direct referral</span></div>
+      <div class="persona-row"><span class="persona-row-label">Budget</span><span class="persona-row-val">Same range — possibly slightly higher</span></div>
+      <div class="persona-row"><span class="persona-row-label">Trust level</span><span class="persona-row-val">Pre-established — lower friction to close</span></div>
+      <div class="persona-row"><span class="persona-row-label">Decision factor</span><span class="persona-row-val">Prior experience or trusted peer recommendation</span></div>
+      <div class="persona-row"><span class="persona-row-label">Discovery</span><span class="persona-row-val">Direct outreach, referral, Google reviews</span></div>
+      <div class="persona-row"><span class="persona-row-label">Win signal</span><span class="persona-row-val">Being remembered and followed up with</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- POSITIONING & MESSAGING -->
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Positioning & Messaging</div>
+      <div class="section-title">What Crestline Says and Where</div>
+      <div class="section-subtitle">One position, adapted by channel</div>
+    </div>
+  </div>
+
+  <div class="card highlight full-width" style="margin-bottom:20px;">
+    <div class="card-label">Core Positioning Statement</div>
+    <div style="font-size:15px;font-weight:600;color:var(--amber-light);line-height:1.5;margin-bottom:8px;">"The dealer that earns your trust before you sign — and stays in touch after you drive away."</div>
+    <div class="card-body">Built for working families in Akron/Canton who need a reliable vehicle and a dealer they don't have to second-guess. Crestline wins on transparency, speed, and follow-through — not on selection size or advertising volume.</div>
+  </div>
+
+  <div class="message-block">
+    <div class="message-header">
+      <span class="message-channel">AutoTrader</span>
+      <span class="message-type">· Primary Lead Channel</span>
+    </div>
+    <div class="message-body">
+      <div class="message-primary">"Dependable vehicles for families who need to count on their car — priced straight, no games."</div>
+      <div class="proof-points">
+        <span class="proof-pill">Clear pricing on every listing</span>
+        <span class="proof-pill">Fast response time</span>
+        <span class="proof-pill">No-pressure process</span>
+        <span class="proof-pill">Google review link in every response</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-block">
+    <div class="message-header">
+      <span class="message-channel">Google Business Profile</span>
+      <span class="message-type">· Reputation & Discovery</span>
+    </div>
+    <div class="message-body">
+      <div class="message-primary">"Trusted by Akron/Canton families for over a decade — see what our customers say."</div>
+      <div class="proof-points">
+        <span class="proof-pill">Respond to every review within 24 hours</span>
+        <span class="proof-pill">Post-sale review request automated via IDMS</span>
+        <span class="proof-pill">Photos updated monthly</span>
+        <span class="proof-pill">Business hours and inventory linked</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-block">
+    <div class="message-header">
+      <span class="message-channel">Facebook Marketplace</span>
+      <span class="message-type">· Secondary Lead Channel</span>
+    </div>
+    <div class="message-body">
+      <div class="message-primary">"Local, honest, and easy to deal with — browse what's on the lot right now."</div>
+      <div class="proof-points">
+        <span class="proof-pill">Same-day response policy</span>
+        <span class="proof-pill">Inventory synced with AutoTrader listings</span>
+        <span class="proof-pill">Review count visible in profile</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-block">
+    <div class="message-header">
+      <span class="message-channel">Referral & Repeat</span>
+      <span class="message-type">· Highest-Value Channel</span>
+    </div>
+    <div class="message-body">
+      <div class="message-primary">"We remember our customers — and we make it worth your while to send a friend."</div>
+      <div class="proof-points">
+        <span class="proof-pill">Post-sale follow-up at 30/60/90 days</span>
+        <span class="proof-pill">Referral incentive program</span>
+        <span class="proof-pill">Birthday and anniversary touchpoints via IDMS</span>
+        <span class="proof-pill">Repeat buyer priority treatment</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-strategy -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 2: CHANNELS & BUDGET                 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-channels" role="tabpanel" aria-labelledby="tab-channels">
+
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Channel Strategy</div>
+      <div class="section-title">Where Crestline Shows Up and Why</div>
+      <div class="section-subtitle">Four channels, each with a defined role — no spray and pray</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">Channel Philosophy</div>
+    <div class="insight-text">A 14-person dealership with no dedicated marketing staff has to be disciplined about channels. The recommendation is seven — each with a defined job: one primary lead channel (AutoTrader), one reputation channel (Google), one secondary lead channel (Facebook Marketplace), one retention channel (referral and repeat), two direct communication channels (email and SMS), and one brand channel (organic social). None overlap. All feed into the IDMS CRM. Paid social and channel expansion wait until data exists to guide targeting decisions. The marketing function itself — whether outsourced or eventually hired in-house — is a Phase 2 decision triggered by growth, not by calendar.</div>
+  </div>
+
+  <table class="channel-table">
+    <thead>
+      <tr>
+        <th style="width:20%">Channel</th>
+        <th style="width:12%">Priority</th>
+        <th style="width:22%">Primary Job</th>
+        <th style="width:22%">What Crestline Does</th>
+        <th style="width:24%">How Success Is Measured</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="channel-name">AutoTrader</div>
+          <div style="font-size:11px;color:var(--text-dim);">Paid listing platform</div>
+        </td>
+        <td><span class="priority-badge priority-high">High</span></td>
+        <td>Primary inbound lead generation</td>
+        <td>Optimized listings with clear pricing, photos, and fast response protocol. Lead capture fed into IDMS CRM.</td>
+        <td>Lead volume, cost per lead, lead-to-appointment rate</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Google Business Profile</div>
+          <div style="font-size:11px;color:var(--text-dim);">Free — reputation & discovery</div>
+        </td>
+        <td><span class="priority-badge priority-high">High</span></td>
+        <td>Reputation management and local search visibility</td>
+        <td>Systematic review requests post-sale via IDMS. 24-hour response to all reviews. Monthly photo and inventory updates.</td>
+        <td>Review count, average rating, profile views, calls from profile</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Facebook Marketplace</div>
+          <div style="font-size:11px;color:var(--text-dim);">Free listing channel</div>
+        </td>
+        <td><span class="priority-badge priority-medium">Medium</span></td>
+        <td>Secondary lead generation — local, lower-funnel buyers</td>
+        <td>Inventory synced with AutoTrader listings where possible. Same-day response policy. Profile links to Google reviews.</td>
+        <td>Leads generated, lead-to-appointment rate, source tracking in IDMS</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Referral & Repeat Program</div>
+          <div style="font-size:11px;color:var(--text-dim);">CRM-driven retention</div>
+        </td>
+        <td><span class="priority-badge priority-high">High</span></td>
+        <td>Highest-margin lead source — trust is pre-established</td>
+        <td>Automated follow-up at 30/60/90 days post-sale. Referral incentive program. Repeat buyer flag in IDMS triggers priority handling.</td>
+        <td>Referral volume, repeat buyer rate, % of sales from prior customers</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Dealer Website</div>
+          <div style="font-size:11px;color:var(--text-dim);">Existing — optimize, don't rebuild</div>
+        </td>
+        <td><span class="priority-badge priority-medium">Medium</span></td>
+        <td>Credibility hub — supports other channels, not a lead engine on its own</td>
+        <td>Inventory feed accurate and current. Google reviews embedded. Clear contact and location information. No major rebuild required in Phase 1.</td>
+        <td>Google referral traffic, time on site, contact form submissions</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Email</div>
+          <div style="font-size:11px;color:var(--text-dim);">Transactional + retention</div>
+        </td>
+        <td><span class="priority-badge priority-medium">Medium</span></td>
+        <td>Post-sale retention and past buyer reactivation — not broadcast marketing</td>
+        <td>Post-sale sequence (7/30/60/90 day touchpoints). Past buyer reactivation campaign 6–12 months post-purchase. Triggered from IDMS. Platform TBD — evaluate whether IDMS handles natively before adding a separate tool.</td>
+        <td>Open rate, click-to-appointment rate, reactivation conversions</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">SMS / Text</div>
+          <div style="font-size:11px;color:var(--text-dim);">Currently manual — unlogged</div>
+        </td>
+        <td><span class="priority-badge priority-high">High</span></td>
+        <td>Lead response and follow-up — the channel buyers actually use</td>
+        <td>Currently manual and untracked. Phase 1: standardize response templates, log all texts in IDMS. Phase 2: integrate SMS platform for automated follow-up sequences (evaluate IDMS native SMS or DealerSocket-compatible tool).</td>
+        <td>Response time, lead-to-appointment rate via text, % of leads contacted by SMS</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Organic Social (Facebook)</div>
+          <div style="font-size:11px;color:var(--text-dim);">Brand presence — Phase 1 foundation</div>
+        </td>
+        <td><span class="priority-badge priority-medium">Medium</span></td>
+        <td>Brand visibility and trust-building for buyers already aware of Crestline</td>
+        <td>Consistent posting cadence (inventory highlights, customer stories, lot updates). Requires a designated owner — GSM or Lead Coordinator. Paid social considered in Phase 2 once organic baseline and IDMS data are established.</td>
+        <td>Follower growth, post reach, profile link clicks to inventory or website</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="channel-name">Paid Social / Display Ads</div>
+          <div style="font-size:11px;color:var(--text-dim);">Phase 2 — data-triggered</div>
+        </td>
+        <td><span class="priority-badge priority-low">Phase 2</span></td>
+        <td>Audience expansion once IDMS data and organic social baseline exist</td>
+        <td>Not recommended until 60+ days of IDMS lead source data is available and organic social is established. Whether this is run in-house or outsourced depends on the marketing function decision made in Phase 2.</td>
+        <td>Cost per lead vs. AutoTrader benchmark, incremental sales volume</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+
+  <!-- BUDGET -->
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Budget Allocation</div>
+      <div class="section-title">Priority Buckets — Not Line Items</div>
+      <div class="section-subtitle">Crestline doesn't need a large marketing budget. It needs a disciplined one.</div>
+    </div>
+  </div>
+
+  <div class="budget-grid">
+    <div class="budget-bucket high">
+      <div class="bucket-label">High Priority</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Protect and optimize first</div>
+      <div class="bucket-items">
+        <div class="bucket-item">AutoTrader subscription and listing quality</div>
+        <div class="bucket-item">IDMS CRM activation (already owned — no added cost)</div>
+        <div class="bucket-item">Google Business Profile management (free — time cost only)</div>
+        <div class="bucket-item">SMS standardization and IDMS logging</div>
+        <div class="bucket-item">Post-sale follow-up automation setup</div>
+      </div>
+    </div>
+    <div class="budget-bucket medium">
+      <div class="bucket-label">Medium Priority</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Invest selectively in Phase 1</div>
+      <div class="bucket-items">
+        <div class="bucket-item">Email platform (evaluate IDMS native first)</div>
+        <div class="bucket-item">Referral incentive program (gift cards, service credits)</div>
+        <div class="bucket-item">Photography — consistent, professional lot photos</div>
+        <div class="bucket-item">Dealer website inventory feed accuracy</div>
+        <div class="bucket-item">Organic social — consistent posting cadence</div>
+      </div>
+    </div>
+    <div class="budget-bucket low">
+      <div class="bucket-label">Phase 2 / Conditional</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Data-triggered or growth-triggered</div>
+      <div class="bucket-items">
+        <div class="bucket-item">Paid Facebook / Instagram advertising</div>
+        <div class="bucket-item">Google Ads (local search)</div>
+        <div class="bucket-item">Additional listing platforms (Cars.com, CarGurus)</div>
+        <div class="bucket-item">SMS automation platform (if IDMS insufficient)</div>
+        <div class="bucket-item">Marketing function: outsourced agency or in-house hire</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MARTECH -->
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Marketing Technology</div>
+      <div class="section-title">The Stack Crestline Actually Needs</div>
+      <div class="section-subtitle">Built on what they already own — not on what's new</div>
+    </div>
+  </div>
+
+  <div class="martech-grid">
+    <div class="martech-card">
+      <div class="martech-icon">🏎</div>
+      <div>
+        <div class="martech-tag">Core System</div>
+        <div class="martech-title">DealerSocket IDMS — CRM Module</div>
+        <div class="martech-desc">Lead capture, pipeline tracking, post-sale follow-up workflows, repeat buyer flags. Already owned and underutilized. This is the marketing backbone — not an add-on.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon" style="background:var(--teal-dim);border-color:var(--teal-border);">⭐</div>
+      <div>
+        <div class="martech-tag existing">Existing — Optimize</div>
+        <div class="martech-title">Google Business Profile</div>
+        <div class="martech-desc">Free reputation management. Review requests integrated into post-sale IDMS workflow. Owner responds to all reviews within 24 hours.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon">🚗</div>
+      <div>
+        <div class="martech-tag existing">Existing — Optimize</div>
+        <div class="martech-title">AutoTrader</div>
+        <div class="martech-desc">Primary paid listing platform. Listings optimized for pricing clarity and photo quality. Response time tracked. Lead data flows into IDMS.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon" style="background:var(--teal-dim);border-color:var(--teal-border);">📊</div>
+      <div>
+        <div class="martech-tag existing">Existing — Activate</div>
+        <div class="martech-title">IDMS Custom Reporting</div>
+        <div class="martech-desc">Lead source performance, conversion by channel, cost per lead. Weekly marketing KPI summary alongside sales dashboard. No separate analytics tool needed in Phase 1.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon">📱</div>
+      <div>
+        <div class="martech-tag">Phase 1 — Standardize</div>
+        <div class="martech-title">SMS / Text</div>
+        <div class="martech-desc">Currently manual and unlogged. Phase 1: standard response templates, all texts logged in IDMS. Phase 2: evaluate IDMS native SMS or a compatible integration (e.g., DealerSocket messaging) for automation.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon">✉️</div>
+      <div>
+        <div class="martech-tag">Phase 1 — Evaluate</div>
+        <div class="martech-title">Email Platform</div>
+        <div class="martech-desc">Evaluate whether IDMS handles post-sale email sequences natively before adding a separate tool. If not, a lightweight platform (MailerLite or similar) for transactional sequences and past buyer reactivation. Newsletter is a future-state consideration.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon">👥</div>
+      <div>
+        <div class="martech-tag">Phase 1 — Establish</div>
+        <div class="martech-title">Facebook Business Page (Organic)</div>
+        <div class="martech-desc">Consistent posting cadence for inventory highlights, customer stories, and lot updates. Owned by GSM or Lead Coordinator. Paid social considered in Phase 2 only after organic baseline is established.</div>
+      </div>
+    </div>
+    <div class="martech-card">
+      <div class="martech-icon" style="background:var(--teal-dim);border-color:var(--teal-border);">🤖</div>
+      <div>
+        <div class="martech-tag" style="color:var(--teal-accent);background:var(--teal-dim);border-color:var(--teal-border);">Phase 2</div>
+        <div class="martech-title">Lindy Voice Agent</div>
+        <div class="martech-desc">Inbound and outbound lead follow-up automation. Not deployed until Phase 1 lead volume and response data establishes the baseline it needs to be useful.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MARKETING FUNCTION / FUTURE STATE -->
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Future State</div>
+      <div class="section-title">The Marketing Function Crestline Doesn't Have Yet</div>
+      <div class="section-subtitle">Phase 1 runs owner-led. Phase 2 requires a decision.</div>
+    </div>
+  </div>
+
+  <div class="insight-box" style="border-left-color:var(--teal-accent);border-color:var(--teal-border);">
+    <div class="insight-label" style="color:var(--teal-accent);">Current State Gap</div>
+    <div class="insight-text">Crestline has no dedicated marketing function. The Owner handles strategy and buying. The GSM handles day-to-day operations. No one owns marketing. Phase 1 is designed to be executable within that constraint — but it creates a ceiling. The referral program, social posting, email sequences, and SMS follow-up all need an owner. That's the Lead Coordinator role, but marketing is currently a secondary responsibility, not a primary one.</div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-label">Path A — Outsourced / Fractional</div>
+      <div class="card-title">Agency or Fractional Marketing Support</div>
+      <div class="card-body">Engage an automotive marketing agency or fractional marketing resource to own paid channels, social content, and email strategy. Triggered when Phase 1 IDMS data shows demand that the current team can't capture fast enough. Lower fixed cost, faster ramp, less management overhead. Best fit if the Owner doesn't want to build an internal marketing function.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Path B — In-House Hire</div>
+      <div class="card-title">Dedicated Marketing Coordinator</div>
+      <div class="card-body">Hire a part-time or full-time marketing coordinator once revenue and lead volume justify it. Owns social, email, SMS cadence, and review management. Reports to GSM. Triggered by a defined threshold — e.g., lead volume exceeding what the Lead Coordinator can manage alongside sales coordination. Higher fixed cost, deeper brand ownership over time.</div>
+    </div>
+  </div>
+
+  <div class="dep-note">
+    <div class="dep-note-icon">↗</div>
+    <div>Neither path is on a fixed timeline. The trigger is data: when IDMS shows lead volume and conversion rates that would improve materially with more marketing capacity, that's when the decision gets made. Hiring or outsourcing before that point adds cost without clear return.</div>
+  </div>
+
+</div><!-- end panel-channels -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 3: ROADMAP                           -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-roadmap" role="tabpanel" aria-labelledby="tab-roadmap">
+
+  <div class="section-header">
+    <div class="section-title-group">
+      <div class="section-eyebrow">Marketing Roadmap</div>
+      <div class="section-title">6 Initiatives Across Two Phases</div>
+      <div class="section-subtitle">Sequenced by dependency — marketing builds on operational foundation, not ahead of it</div>
+    </div>
+  </div>
+
+  <div class="dep-note">
+    <div class="dep-note-icon">↗</div>
+    <div>Marketing Phase 1 runs <strong>concurrent with</strong> Business Strategy Roadmap Phase 1 — specifically after Initiative 1 (Strategy Definition) and alongside Initiative 4 (IDMS CRM Activation). Marketing Phase 2 begins only after IDMS lead data is live and the referral program has at least 60 days of results.</div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase-section phase-1">
+    <div class="phase-header">
+      <div class="phase-pill">Phase 1</div>
+      <div class="phase-name">Foundation — Build the Marketing System</div>
+      <div class="phase-timing">Weeks 2–14 · Concurrent with Ops Phase 1</div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-num">1</div>
+      <div>
+        <div class="initiative-title">Document the Positioning and Messaging Framework</div>
+        <div class="initiative-desc">Translate the completed business strategy into a one-page marketing brief: who Crestline is trying to win, what they say to that buyer, and how that message adapts by channel (AutoTrader, Google, Facebook, referral). This brief becomes the standard for all listing copy, review responses, and outbound follow-up templates. Without it, every touchpoint is inconsistent.</div>
+        <div class="initiative-meta">
+          <div class="meta-tag"><span>Owner</span></div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span><span> Weeks 2–3</span></div>
+          <div class="meta-tag"><span class="tag-label">Depends on:</span><span> Biz Strategy Initiative 1</span></div>
+          <div class="meta-tag"><span class="tag-label">Deliverable:</span><span> One-page messaging brief</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-num">2</div>
+      <div>
+        <div class="initiative-title">Optimize AutoTrader Listings, Response Protocol, and SMS Standards</div>
+        <div class="initiative-desc">Audit current listings for pricing clarity, photo quality, and description consistency against the new messaging brief. Set a response time standard across all channels (target: under 2 hours during business hours). Critically — standardize SMS: text is how buyers communicate, but Crestline's texts are currently manual and unlogged. Create approved response templates, establish a logging protocol in IDMS, and designate a single owner for all inbound lead response. Lead data captured in IDMS from day one regardless of channel.</div>
+        <div class="initiative-meta">
+          <div class="meta-tag"><span>GSM + Lead Coord.</span></div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span><span> Weeks 3–6</span></div>
+          <div class="meta-tag"><span class="tag-label">Depends on:</span><span> Initiative 1 above</span></div>
+          <div class="meta-tag"><span class="tag-label">Deliverable:</span><span> Response protocol doc + SMS templates + updated listings</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-num">3</div>
+      <div>
+        <div class="initiative-title">Launch Systematic Reputation Management</div>
+        <div class="initiative-desc">Integrate a post-sale review request into the IDMS CRM follow-up workflow — triggered automatically at 7 days post-sale. Owner reviews and responds to all Google reviews within 24 hours using approved response templates. Target: 10+ new reviews in first 90 days. Google rating is the most visible trust signal for a buyer who found Crestline on AutoTrader and is now doing their due diligence.</div>
+        <div class="initiative-meta">
+          <div class="meta-tag"><span>Lead Coord. + Owner</span></div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span><span> Weeks 8–12</span></div>
+          <div class="meta-tag"><span class="tag-label">Depends on:</span><span> IDMS CRM (Biz Initiative 4)</span></div>
+          <div class="meta-tag"><span class="tag-label">Deliverable:</span><span> Review workflow + response template library</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-num">4</div>
+      <div>
+        <div class="initiative-title">Launch Referral Incentive Program</div>
+        <div class="initiative-desc">Design and launch a simple referral program: past buyers who send a friend who purchases receive a defined incentive (gift card, service credit, or cash — owner's preference). The trigger and tracking live in IDMS. Program is introduced during the 30-day post-sale follow-up call. This is Crestline's highest-margin lead source because trust is pre-established — it should be the most intentional.</div>
+        <div class="initiative-meta">
+          <div class="meta-tag"><span>Owner + Lead Coord.</span></div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span><span> Weeks 10–14</span></div>
+          <div class="meta-tag"><span class="tag-label">Depends on:</span><span> Post-sale workflow (Biz Initiative 5)</span></div>
+          <div class="meta-tag"><span class="tag-label">Deliverable:</span><span> Referral program design + IDMS trigger</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-section phase-2">
+    <div class="phase-header">
+      <div class="phase-pill">Phase 2</div>
+      <div class="phase-name">Amplification — Expand What's Working</div>
+      <div class="phase-timing">Weeks 1–12 after Phase 1 stabilizes · Data-triggered</div>
+    </div>
+
+    <div class="dep-note" style="margin-bottom:16px;">
+      <div class="dep-note-icon">↗</div>
+      <div>Phase 2 marketing is not on a fixed timeline. It begins when IDMS is producing 60+ days of lead source data and the Phase 1 referral program has measurable results. Expanding channels before you know what's working is how budgets get wasted.</div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-num">5</div>
+      <div>
+        <div class="initiative-title">Evaluate and Expand Paid Channels Based on IDMS Data</div>
+        <div class="initiative-desc">Use 60+ days of IDMS lead source performance data to evaluate: Is AutoTrader producing at the right cost per lead? Is Facebook Marketplace worth formalizing with paid promotion? Are there geographic gaps in Akron/Canton that paid Google or social ads could address? Expansion decisions are made with data — not assumptions. At minimum, evaluate Facebook Marketplace paid promotion and Google Ads for local search terms before committing budget to either.</div>
+        <div class="initiative-meta">
+          <div class="meta-tag"><span>Owner + PDL</span></div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span><span> After 60 days of Phase 1 data</span></div>
+          <div class="meta-tag"><span class="tag-label">Depends on:</span><span> IDMS reporting (Biz Initiative 3)</span></div>
+          <div class="meta-tag"><span class="tag-label">Deliverable:</span><span> Channel performance analysis + go/no-go recommendation</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative">
+      <div class="initiative-num">6</div>
+      <div>
+        <div class="initiative-title">Make the Marketing Function Decision</div>
+        <div class="initiative-desc">By the end of Phase 1, Crestline will have lead source data, conversion rates, and a clear picture of where marketing capacity is the constraint. That's when the decision gets made: outsource to an automotive marketing agency or fractional resource, or hire a dedicated marketing coordinator. The trigger is not time — it's data showing that lead volume or channel performance would improve materially with more marketing capacity. Neither path is right or wrong; the right answer depends on how fast Crestline is growing and whether the Owner wants to build an internal function.</div>
+        <div class="initiative-meta">
+          <div class="meta-tag"><span>Owner</span></div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span><span> End of Phase 1 / Early Phase 2</span></div>
+          <div class="meta-tag"><span class="tag-label">Depends on:</span><span> Phase 1 IDMS data + channel performance</span></div>
+          <div class="meta-tag"><span class="tag-label">Deliverable:</span><span> Marketing function decision + onboarding plan</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-roadmap -->
+
+<!-- SYNTHETIC NOTE -->
+<div class="synthetic-note">
+  All data in this assessment is synthetic — developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-' + name).setAttribute('aria-selected', 'true');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+document.querySelectorAll('.tab-btn').forEach((btn, i, btns) => {
+  btn.addEventListener('keydown', e => {
+    let t = null;
+    if (e.key === 'ArrowRight') t = btns[(i + 1) % btns.length];
+    if (e.key === 'ArrowLeft') t = btns[(i - 1 + btns.length) % btns.length];
+    if (t) { t.focus(); t.click(); }
+  });
+});
+</script>
+</body>
+</html>
