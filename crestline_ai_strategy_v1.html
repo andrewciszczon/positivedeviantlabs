@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crestline Auto Group — AI Strategy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #0d1b2a;
+  --navy-mid:    #1a2e42;
+  --navy-light:  #243d56;
+  --navy-card:   #1e3448;
+  --amber:       #c17f24;
+  --amber-light: #e09b3d;
+  --amber-dim:   rgba(193,127,36,0.15);
+  --amber-border:rgba(193,127,36,0.3);
+  --teal:        #004d50;
+  --teal-accent: #00a8ae;
+  --teal-dim:    rgba(0,168,174,0.12);
+  --teal-border: rgba(0,168,174,0.3);
+  --text-primary:#e8e0d4;
+  --text-muted:  #8fa3b0;
+  --text-dim:    #5a7080;
+  --border:      rgba(193,127,36,0.18);
+  --border-light:rgba(255,255,255,0.06);
+  --font: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--navy);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.page-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(193,127,36,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  margin-bottom: 6px;
+}
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.header-title span { color: var(--amber-light); }
+.header-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.meta-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+}
+.meta-dot.teal { background: var(--teal-accent); }
+.meta-dot.green { background: #4caf82; }
+.header-score {
+  position: absolute;
+  top: 24px; right: 40px;
+  text-align: right;
+}
+.score-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--amber-light);
+  line-height: 1;
+}
+.score-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.score-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  border: 1px solid var(--amber-border);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display: flex;
+  background: var(--navy-mid);
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+  gap: 2px;
+  overflow-x: auto;
+}
+.tab-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--amber-light); background: var(--amber-dim); }
+.tab-btn.active {
+  color: var(--amber-light);
+  border-bottom-color: var(--amber);
+  background: var(--amber-dim);
+}
+.tab-icon { font-size: 14px; }
+
+/* ── PANEL ── */
+.tab-panel { display: none; padding: 32px 40px 48px; }
+.tab-panel.active { display: block; }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.section-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  margin-bottom: 4px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.section-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ── LAYOUT ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.full-width { margin-bottom: 24px; }
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+}
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--amber-light);
+  margin-bottom: 10px;
+}
+.card-body {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+.card.highlight {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, rgba(193,127,36,0.06) 100%);
+  border-color: var(--amber-border);
+}
+.card.teal {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, rgba(0,77,80,0.08) 100%);
+  border-color: var(--teal-border);
+}
+
+/* ── INSIGHT BOX ── */
+.insight-box {
+  background: linear-gradient(135deg, rgba(193,127,36,0.08) 0%, rgba(0,77,80,0.08) 100%);
+  border: 1px solid var(--amber-border);
+  border-left: 3px solid var(--amber);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.insight-box.teal {
+  border-color: var(--teal-border);
+  border-left-color: var(--teal-accent);
+}
+.insight-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  margin-bottom: 6px;
+}
+.insight-box.teal .insight-label { color: var(--teal-accent); }
+.insight-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ── PHILOSOPHY PRINCIPLES ── */
+.principle-list { margin-bottom: 24px; }
+.principle-item {
+  display: flex;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.principle-item:last-child { border-bottom: none; }
+.principle-icon {
+  width: 36px; height: 36px;
+  border-radius: 6px;
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.principle-icon.teal {
+  background: var(--teal-dim);
+  border-color: var(--teal-border);
+}
+.principle-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+}
+.principle-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ── READINESS GRID ── */
+.readiness-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.readiness-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px;
+}
+.readiness-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.readiness-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot-green { background: #4caf82; }
+.dot-amber { background: var(--amber); }
+.dot-red { background: #e05c5c; }
+.readiness-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.readiness-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── SPDR CONNECTION ── */
+.spdr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.spdr-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.spdr-letter {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--amber-light);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.spdr-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.spdr-role {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: left;
+}
+.spdr-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+.spdr-tag.primary { color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border); }
+.spdr-tag.secondary { color: var(--teal-accent); background: var(--teal-dim); border: 1px solid var(--teal-border); }
+.spdr-tag.neutral { color: var(--text-dim); background: rgba(255,255,255,0.04); border: 1px solid var(--border-light); }
+
+/* ── PHASE BLOCKS ── */
+.phase-block {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.phase-block-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: var(--navy-mid);
+  border-bottom: 1px solid var(--border);
+}
+.phase-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.phase-1 .phase-pill { color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border); }
+.phase-2 .phase-pill { color: var(--teal-accent); background: var(--teal-dim); border: 1px solid var(--teal-border); }
+.phase-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.phase-timing {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+.phase-body { padding: 20px; }
+
+/* ── DELIVERABLE ITEMS ── */
+.deliverable-list { display: flex; flex-direction: column; gap: 12px; }
+.deliverable-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  background: var(--navy-mid);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+}
+.deliverable-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.deliverable-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.deliverable-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.deliverable-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-border);
+  padding: 1px 6px;
+  border-radius: 2px;
+  margin-bottom: 4px;
+}
+.deliverable-tag.teal {
+  color: var(--teal-accent);
+  background: var(--teal-dim);
+  border-color: var(--teal-border);
+}
+
+/* ── TRIGGER CONDITIONS ── */
+.trigger-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.trigger-card {
+  background: var(--navy-card);
+  border: 1px solid var(--teal-border);
+  border-radius: 6px;
+  padding: 16px;
+}
+.trigger-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  margin-bottom: 8px;
+}
+.trigger-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.trigger-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── DEP NOTE ── */
+.dep-note {
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.dep-note-icon { color: var(--teal-accent); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── ROADMAP ── */
+.phase-section { margin-bottom: 36px; }
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 14px 20px;
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.phase-section.phase-1 .phase-pill { color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border); }
+.phase-section.phase-2 .phase-pill { color: var(--teal-accent); background: var(--teal-dim); border: 1px solid var(--teal-border); }
+
+.initiative {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+}
+.initiative-num {
+  width: 40px; height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.phase-section.phase-1 .initiative-num { background: var(--amber-dim); border: 1px solid var(--amber-border); color: var(--amber-light); }
+.phase-section.phase-2 .initiative-num { background: var(--teal-dim); border: 1px solid var(--teal-border); color: var(--teal-accent); }
+.initiative-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.initiative-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.initiative-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.meta-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--navy-mid);
+  border: 1px solid var(--border-light);
+  padding: 2px 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.meta-tag .tag-label { color: var(--text-muted); }
+
+/* ── SYNTHETIC NOTE ── */
+.synthetic-note {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: italic;
+  text-align: center;
+  padding: 16px 40px;
+  border-top: 1px solid var(--border-light);
+  background: var(--navy-mid);
+}
+
+@media (max-width: 768px) {
+  .tab-panel { padding: 20px; }
+  .page-header { padding: 20px; }
+  .header-score { position: static; text-align: left; margin-top: 12px; }
+  .two-col, .readiness-grid, .trigger-grid, .spdr-grid { grid-template-columns: 1fr; }
+  .spdr-grid { grid-template-columns: 1fr 1fr; }
+  .initiative { grid-template-columns: 36px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="header-eyebrow">Sample Work · AI Strategy</div>
+  <div class="header-title"><span>Crestline Auto Group</span> — AI Strategy</div>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-dot"></div>Independent Used Car Dealer</div>
+    <div class="meta-item"><div class="meta-dot"></div>Akron/Canton Metro · Ohio</div>
+    <div class="meta-item"><div class="meta-dot teal"></div>14 Employees · $6.8M Revenue</div>
+    <div class="meta-item"><div class="meta-dot green"></div>Synthetic Data — Illustrative Only</div>
+  </div>
+  <div class="header-score">
+    <div class="score-num">52.2</div>
+    <div class="score-label">SPDR Score</div>
+    <div class="score-badge">Developing</div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav" role="tablist">
+  <button class="tab-btn active" role="tab" aria-selected="true" id="tab-strategy" aria-controls="panel-strategy" onclick="switchTab('strategy')">
+    <span class="tab-icon">◎</span> AI Strategy
+  </button>
+  <button class="tab-btn" role="tab" aria-selected="false" id="tab-implementation" aria-controls="panel-implementation" onclick="switchTab('implementation')">
+    <span class="tab-icon">◈</span> Implementation Plan
+  </button>
+  <button class="tab-btn" role="tab" aria-selected="false" id="tab-roadmap" aria-controls="panel-roadmap" onclick="switchTab('roadmap')">
+    <span class="tab-icon">◇</span> What Comes Next
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 1: AI STRATEGY                       -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-strategy" role="tabpanel" aria-labelledby="tab-strategy">
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">PDL Philosophy</div>
+      <div class="section-title">Human-Led AI</div>
+      <div class="section-subtitle">People bring the wisdom, judgment, context, and connection to the consequences. AI amplifies what people provide.</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">Starting Point</div>
+    <div class="insight-text">PDL's mission is to help turn strategy and technology into tools that serve people, not the other way around. AI provides the most value when the human is actively driving. They understand the problem, the context, and have to live with the consequences. AI is a tool in the toolbox. It's not the solution, but can make the solution better. Hence, PDL always advises starting with AI as a thought partner. A soundboard. When used correctly, AI can help generate ideas, rapid prototype, identify and pressure-test assumptions, and ask questions you haven't thought of yet. The focus isn't efficiency. It's a higher quality of thinking and output. That's what amplification means.</div>
+  </div>
+
+  <div class="principle-list card full-width">
+    <div class="card-label">Three Principles — PDL's Approach to AI in Business</div>
+    <div class="principle-item">
+      <div class="principle-icon">🧠</div>
+      <div>
+        <div class="principle-title">Judgment First</div>
+        <div class="principle-desc">AI doesn't replace the business owner's judgment. It extends it. The best AI outputs come from people who already understand the problem they're asking about. A team that hasn't developed that judgment yet will get mediocre outputs regardless of which tool they use. That's why we start with thought partnership, not automation.</div>
+      </div>
+    </div>
+    <div class="principle-item">
+      <div class="principle-icon">📈</div>
+      <div>
+        <div class="principle-title">Emergent Use Cases, Not Mandated Ones</div>
+        <div class="principle-desc">Mandating use cases before a team has used AI organically produces compliance, not capability. The most durable AI adoption happens when people discover what's useful for their actual work. Those discoveries get documented, refined, and shared. That's the approach here: give the team access, give them time, and capture what emerges.</div>
+      </div>
+    </div>
+    <div class="principle-item">
+      <div class="principle-icon teal">🔒</div>
+      <div>
+        <div class="principle-title">Governance Before Scale</div>
+        <div class="principle-desc">AI governance isn't a compliance exercise. It's the infrastructure that makes scaling AI safe. Before Crestline expands into automation, voice agents, or customer-facing AI, the team needs shared guidelines for what AI should and shouldn't be used for, how to handle customer data, and what outputs require human review. Governance built during the pilot is governance that fits the business. A generic policy bolted on after the fact rarely holds.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CRESTLINE FIT -->
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Why This Fits Crestline</div>
+      <div class="section-title">The Right Approach for This Business</div>
+      <div class="section-subtitle">Size, structure, and starting point all point the same direction</div>
+    </div>
+  </div>
+
+  <div class="insight-box teal">
+    <div class="insight-label">Crestline's AI Position</div>
+    <div class="insight-text">AI supports the existing team doing their jobs better. It doesn't replace roles or add headcount. Crestline has 14 people, no dedicated technology function, and an owner who is close to operations. That profile is well-suited for AI as a thought partner and poorly suited for complex AI infrastructure. The right starting point is frontier model access for the whole organization, not a targeted automation project.</div>
+  </div>
+
+  <div class="readiness-grid">
+    <div class="readiness-card">
+      <div class="readiness-label"><div class="readiness-dot dot-green"></div>Strength</div>
+      <div class="readiness-title">Owner Engagement</div>
+      <div class="readiness-desc">The Owner is close to operations and involved in day-to-day decisions. That's an asset for AI adoption — the person with the most context is in a position to use AI the most effectively and model its use for the rest of the team.</div>
+    </div>
+    <div class="readiness-card">
+      <div class="readiness-label"><div class="readiness-dot dot-green"></div>Strength</div>
+      <div class="readiness-title">Google Workspace Already in Use</div>
+      <div class="readiness-desc">The team is already working in a cloud-based environment with Gmail and Google Docs. Gemini is included in most Google Workspace subscriptions, making it the lowest-barrier entry point. That lowers the adoption barrier for AI tools that integrate with or complement that stack, including NotebookLM for training reinforcement.</div>
+    </div>
+    <div class="readiness-card">
+      <div class="readiness-label"><div class="readiness-dot dot-amber"></div>Watch</div>
+      <div class="readiness-title">No Dedicated Tech Function</div>
+      <div class="readiness-desc">There is no IT or technology owner at Crestline. AI deployment and ongoing management needs to be simple enough for the GSM or Lead Coordinator to maintain. Any tool that requires technical administration is the wrong tool for Phase 1.</div>
+    </div>
+    <div class="readiness-card">
+      <div class="readiness-label"><div class="readiness-dot dot-amber"></div>Watch</div>
+      <div class="readiness-title">Operational Constraints Come First</div>
+      <div class="readiness-desc">Crestline's SPDR score is 52.2. Strategy and process gaps are larger constraints than AI capability gaps. AI won't fix a broken recon process or a missing strategy — it will amplify whatever system it operates within. The business foundation has to be built in parallel.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SPDR CONNECTION -->
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Systems Fit</div>
+      <div class="section-title">Where AI Sits in the SPDR System</div>
+      <div class="section-subtitle">AI touches all four systems — but it doesn't fix them</div>
+    </div>
+  </div>
+
+  <div class="spdr-grid">
+    <div class="spdr-card">
+      <div class="spdr-letter">S</div>
+      <div class="spdr-name">Strategy</div>
+      <div class="spdr-tag primary">Thought Partner</div>
+      <div class="spdr-role">AI helps the whole team think and communicate more effectively. The Owner uses it to pressure-test strategic decisions. The GSM drafts vendor SLAs and process documentation. Sales staff write better listings and follow-up messages. The Lead Coordinator handles review responses and scheduling. Same judgment, better output at every level.</div>
+    </div>
+    <div class="spdr-card">
+      <div class="spdr-letter">P</div>
+      <div class="spdr-name">Processes</div>
+      <div class="spdr-tag primary">Phase 1 Use</div>
+      <div class="spdr-role">Lead response drafts, follow-up templates, listing copy, review responses. AI accelerates repetitive communication tasks without changing the underlying process. Process improvement through AI is a Phase 2 consideration once the pilot reveals where the real friction is.</div>
+    </div>
+    <div class="spdr-card">
+      <div class="spdr-letter">D</div>
+      <div class="spdr-name">Data</div>
+      <div class="spdr-tag secondary">Phase 2</div>
+      <div class="spdr-role">Once IDMS reporting is live, AI can help interpret patterns: days-to-sale trends, buying filter logic, performance anomalies. Not useful until the data foundation exists. In Phase 2, AI can also help ensure Crestline's data infrastructure is built with the future in mind, not just reported on today.</div>
+    </div>
+    <div class="spdr-card">
+      <div class="spdr-letter">R</div>
+      <div class="spdr-name">Resources</div>
+      <div class="spdr-tag neutral">Amplification</div>
+      <div class="spdr-role">AI extends what the existing team can do without adding headcount. Same people, better equipped. The goal isn't doing more of the same things faster. It's producing higher quality thinking and output across the organization.</div>
+    </div>
+  </div>
+
+</div><!-- end panel-strategy -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 2: IMPLEMENTATION PLAN               -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-implementation" role="tabpanel" aria-labelledby="tab-implementation">
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Phase 1</div>
+      <div class="section-title">Foundation — Access, Training, and Organic Pilot</div>
+      <div class="section-subtitle">Weeks 6–16 · Concurrent with Business Strategy Phase 1</div>
+    </div>
+  </div>
+
+  <div class="dep-note">
+    <div class="dep-note-icon">↗</div>
+    <div>AI Phase 1 launches concurrent with Business Strategy Roadmap Phase 1, specifically aligned to Initiative 6 (AI Thought Partner Pilot). It does not wait for operational initiatives to complete but runs alongside them. Phase 2 AI work is explicitly triggered by Phase 1 data. Not by calendar.</div>
+  </div>
+
+  <div class="phase-block phase-1">
+    <div class="phase-block-header">
+      <div class="phase-pill">Tool Selection</div>
+      <div class="phase-name">A Collaborative Decision — Not a Top-Down One</div>
+    </div>
+    <div class="phase-body">
+      <div class="card-body" style="margin-bottom:16px;">The team that uses AI daily should have input into which tool they use. The Owner sets the direction, but the GSM, Lead Coordinator, and sales staff are the ones building habits during the pilot. Bring them into the evaluation. Three strong options exist for Crestline, each with a different tradeoff. A fourth option — aggregator platforms like Poe — offers flexibility by bundling multiple models in one interface, but adds complexity during onboarding that may slow adoption for a team at this stage. Switching tools mid-pilot isn't catastrophic. Prompting habits and use cases transfer reasonably well across platforms. That said, consistency during a 60-90 day window reduces distraction and builds cleaner comparison data.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div class="card">
+          <div class="card-label">ChatGPT Teams</div>
+          <div class="card-body">Broad name recognition. Strong general-purpose capability. Teams plan includes data privacy controls with conversations not used for training. Familiar interface for most users. Plugin ecosystem available if needed in Phase 2.</div>
+        </div>
+        <div class="card teal">
+          <div class="card-label">Claude (Anthropic)</div>
+          <div class="card-body">Strong reasoning and long-document capability. Excellent for drafting, analysis, and thought partnership. Teams plan available. Less name recognition but equal or superior capability for Crestline's Phase 1 use cases. Integrates well with Google Workspace workflows.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Gemini (Google)</div>
+          <div class="card-body">Lowest barrier to entry. Already included in most Google Workspace subscriptions, so Crestline may have access without additional cost. Strong breadth of capability and deep Workspace integration. May be a step behind Claude and ChatGPT on depth of thought partnership, but a strong starting point for a team already in the Google ecosystem.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-block phase-1">
+    <div class="phase-block-header">
+      <div class="phase-pill">Training & Onboarding</div>
+      <div class="phase-name">Whole-Org Access + Basic Training</div>
+    </div>
+    <div class="phase-body">
+      <div class="card-body" style="margin-bottom:16px;">All 14 staff get access on day one. Training is basic: how the tool works, what it's good at, what it's not, and the governance guardrails. The goal is to remove the barrier to entry, not to prescribe how people use it. The Owner sponsors the pilot. The Lead Coordinator manages day-to-day questions and use case documentation. NotebookLM serves as the living training reinforcement hub, housing the governance doc, prompt library, best practices, and use case library in one searchable place the team can return to.</div>
+      <div class="deliverable-list">
+        <div class="deliverable-item">
+          <div class="deliverable-icon">📋</div>
+          <div>
+            <div class="deliverable-tag">Deliverable</div>
+            <div class="deliverable-title">AI Governance Framework</div>
+            <div class="deliverable-desc">Acceptable use guidelines, data handling rules (what customer data can and can't go into AI prompts), output review requirements, and escalation protocol. Written for a 14-person team. One page, plain language, not a compliance document.</div>
+          </div>
+        </div>
+        <div class="deliverable-item">
+          <div class="deliverable-icon">📝</div>
+          <div>
+            <div class="deliverable-tag">Deliverable</div>
+            <div class="deliverable-title">Starter Prompt Library</div>
+            <div class="deliverable-desc">20–30 reusable prompts built around Crestline's actual workflows: lead response drafts, listing descriptions, review responses, follow-up templates, buying analysis, and owner-level strategic thinking prompts. Stored in NotebookLM. Updated as the pilot produces better versions.</div>
+          </div>
+        </div>
+        <div class="deliverable-item">
+          <div class="deliverable-icon">📖</div>
+          <div>
+            <div class="deliverable-tag">Deliverable</div>
+            <div class="deliverable-title">Best Practices Guide</div>
+            <div class="deliverable-desc">How to write a good prompt, how to iterate on AI output, what to review before sending, and what not to delegate to AI. Role-specific guidance for sales staff, the GSM, and the Owner. Stored in NotebookLM alongside the governance doc.</div>
+          </div>
+        </div>
+        <div class="deliverable-item">
+          <div class="deliverable-icon">🗂️</div>
+          <div>
+            <div class="deliverable-tag">Deliverable — End of Pilot</div>
+            <div class="deliverable-title">Use Case Library</div>
+            <div class="deliverable-desc">Documented from the 60–90 day organic pilot. What the team actually used AI for, which use cases produced the most value, and which are candidates for systematization in Phase 2. This library drives the Phase 2 prioritization. Not assumptions made before the pilot ran.</div>
+          </div>
+        </div>
+        <div class="deliverable-item">
+          <div class="deliverable-icon">🔬</div>
+          <div>
+            <div class="deliverable-tag">Deliverable — End of Pilot</div>
+            <div class="deliverable-title">NotebookLM Training Hub</div>
+            <div class="deliverable-desc">A Google NotebookLM instance housing all four deliverables above: governance, prompt library, best practices, and use case library. The team can ask questions of the documents directly, find prompts by workflow, and onboard new staff without a dedicated training session. Living document, updated as the business evolves.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PHASE 2 TRIGGER CONDITIONS -->
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Phase 2</div>
+      <div class="section-title">Amplification — Triggered, Not Assumed</div>
+      <div class="section-subtitle">Phase 2 AI work doesn't start on a schedule — it starts when the data says it's ready</div>
+    </div>
+  </div>
+
+  <div class="insight-box teal">
+    <div class="insight-label">Why Triggers Matter</div>
+    <div class="insight-text">Phase 2 AI tools — the buying filter and the Lindy voice agent — are only useful if the underlying data and processes exist to support them. The buying filter needs 60+ days of days-to-sale data by vehicle type and acquisition source. The voice agent needs a functioning lead capture process to hand off to. Deploying either before those conditions are met produces a tool that can't do its job. The trigger conditions below are not milestones to hit for their own sake. They're the minimum foundation each Phase 2 tool requires to work.</div>
+  </div>
+
+  <div class="trigger-grid">
+    <div class="trigger-card">
+      <div class="trigger-label">AI Buying Filter</div>
+      <div class="trigger-title">Trigger Conditions</div>
+      <div class="trigger-desc">
+        <div style="margin-bottom:8px;">✓ &nbsp;60+ days of IDMS days-to-sale data by acquisition source and vehicle type</div>
+        <div style="margin-bottom:8px;">✓ &nbsp;True GPU (gross profit per unit) with holding cost tracked for same period</div>
+        <div style="margin-bottom:8px;">✓ &nbsp;Recon SLA established and producing consistent cycle time data</div>
+        <div>✓ &nbsp;Owner has reviewed data and can articulate which inventory segments perform best</div>
+      </div>
+    </div>
+    <div class="trigger-card">
+      <div class="trigger-label">Lindy Voice Agent</div>
+      <div class="trigger-title">Trigger Conditions</div>
+      <div class="trigger-desc">
+        <div style="margin-bottom:8px;">✓ &nbsp;IDMS CRM fully activated with lead capture and pipeline tracking live</div>
+        <div style="margin-bottom:8px;">✓ &nbsp;Lead response protocol established and followed consistently</div>
+        <div style="margin-bottom:8px;">✓ &nbsp;Post-sale follow-up workflows running for 60+ days</div>
+        <div>✓ &nbsp;Lead Coordinator role in place to manage agent handoffs</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-implementation -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 3: WHAT COMES NEXT                   -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-roadmap" role="tabpanel" aria-labelledby="tab-roadmap">
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">After the Pilot</div>
+      <div class="section-title">What Comes Next Depends on What the Pilot Reveals</div>
+      <div class="section-subtitle">PDL doesn't assume Crestline is committed to expanding AI. The pilot is designed to find out.</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">PDL's Commitment</div>
+    <div class="insight-text">Recommending AI tools for the sake of recommending AI tools is exactly what PDL won't do. The pilot exists to answer a real question: does AI make Crestline's team more effective? If the answer is yes, the follow-up question is where specifically, and that's what determines what comes next. If the answer is no, or not yet, that's equally valuable information. The goal is honest assessment, not a predetermined path to Phase 2.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">What Phase 1 Is Designed to Answer</div>
+      <div class="section-title">The Questions the Pilot Resolves</div>
+      <div class="section-subtitle">60–90 days of organic use produces answers that assumptions never could</div>
+    </div>
+  </div>
+
+  <div class="three-col">
+    <div class="card">
+      <div class="card-label">Adoption</div>
+      <div class="card-title">Is the team actually using it?</div>
+      <div class="card-body">Voluntary adoption across a 14-person team is the first signal. If only one or two people are using AI after 90 days, that tells you something important about readiness, the tool choice, or both. Adoption breadth matters before use case depth.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Value</div>
+      <div class="card-title">Where is it producing real impact?</div>
+      <div class="card-body">The use case library documents this. Not where AI could theoretically help, but where it actually did. The highest-value use cases from the pilot become the candidates for systematization. Everything else stays optional.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Fit</div>
+      <div class="card-title">Is this the right tool for this team?</div>
+      <div class="card-body">Tool fit matters. A platform that one person loves and twelve people avoid isn't a successful deployment. The pilot surfaces whether the chosen tool matches how Crestline's team actually works, and whether a different option would serve them better.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">If the Pilot Is Successful</div>
+      <div class="section-title">What a Successful Pilot Unlocks</div>
+      <div class="section-subtitle">These are possibilities, not commitments</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card highlight">
+      <div class="card-label">AI Buying Filter</div>
+      <div class="card-title">Data-anchored acquisition decisions</div>
+      <div class="card-body">If IDMS reporting is live and producing 60+ days of days-to-sale and GPU data, the buying filter becomes viable. A one-page decision rule that scores acquisition opportunities by projected turn velocity and gross profit per unit. The Owner's judgment stays at the center. AI gives it better data to work with.</div>
+    </div>
+    <div class="card highlight">
+      <div class="card-label">Lindy Voice Agent</div>
+      <div class="card-title">Automated lead response and follow-up</div>
+      <div class="card-body">If the IDMS CRM is fully active, lead protocols are established, and the Lead Coordinator is in place, a voice agent becomes a force multiplier rather than a liability. Handles inbound response, appointment confirmation, and post-sale touchpoints. Not deployed until the infrastructure it hands off to actually exists.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">If the Pilot Struggles</div>
+      <div class="section-title">What a Struggling Pilot Tells You</div>
+      <div class="section-subtitle">Negative signal is still signal</div>
+    </div>
+  </div>
+
+  <div class="insight-box teal">
+    <div class="insight-label">Honest Assessment</div>
+    <div class="insight-text">Low adoption after 90 days isn't a failure of the team. It's information. It might mean the tool wasn't the right fit. It might mean the timing was wrong — the operational constraints (recon, IDMS, strategy) were too loud for AI to compete for attention. It might mean the training and onboarding needed more structure. PDL reviews the pilot outcomes with the Owner honestly. If the conditions aren't right to expand, we say so. Pushing AI forward when the foundation isn't ready doesn't serve Crestline. It serves a predetermined agenda.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">The Question PDL Asks</div>
+      <div class="section-title">At the End of Phase 1</div>
+    </div>
+  </div>
+
+  <div class="card full-width" style="text-align:center;padding:32px 40px;">
+    <div style="font-size:18px;font-weight:700;color:var(--amber-light);line-height:1.4;margin-bottom:12px;">"Did AI make your team more effective? If yes, where specifically? That's where we go next."</div>
+    <div style="font-size:13px;color:var(--text-muted);max-width:600px;margin:0 auto;">The answer to that question determines everything that follows. Not a predetermined roadmap. Not a commitment made before the pilot ran. What the pilot reveals is what drives the next decision.</div>
+  </div>
+
+</div><!-- end panel-roadmap -->
+
+<!-- SYNTHETIC NOTE -->
+<div class="synthetic-note">
+  All data in this assessment is synthetic — developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-' + name).setAttribute('aria-selected', 'true');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+document.querySelectorAll('.tab-btn').forEach((btn, i, btns) => {
+  btn.addEventListener('keydown', e => {
+    let t = null;
+    if (e.key === 'ArrowRight') t = btns[(i + 1) % btns.length];
+    if (e.key === 'ArrowLeft') t = btns[(i - 1 + btns.length) % btns.length];
+    if (t) { t.focus(); t.click(); }
+  });
+});
+</script>
+</body>
+</html>
