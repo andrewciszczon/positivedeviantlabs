@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Strategy — Crestline Auto Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e42;
+    --navy-light: #243d56;
+    --navy-card: #1e3448;
+    --amber: #c17f24;
+    --amber-light: #e09b3d;
+    --amber-dim: rgba(193,127,36,0.15);
+    --amber-border: rgba(193,127,36,0.3);
+    --teal: #004d50;
+    --teal-accent: #00a8ae;
+    --teal-dim: rgba(0,168,174,0.12);
+    --teal-border: rgba(0,168,174,0.3);
+    --text-primary: #e8e0d4;
+    --text-muted: #8fa3b0;
+    --text-dim: #5a7080;
+    --border: rgba(193,127,36,0.18);
+    --border-light: rgba(255,255,255,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 32px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-left { flex: 1; }
+
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal-accent);
+    margin-bottom: 10px;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .page-title .crestline { color: var(--amber); }
+  .meta-dots { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  .meta-dot {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-dot::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .spdr-score { text-align: right; flex-shrink: 0; margin-left: 32px; }
+
+  .score-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .score-value { font-size: 36px; font-weight: 700; color: var(--amber); line-height: 1; }
+  .score-max { font-size: 14px; color: var(--text-dim); font-weight: 400; }
+
+  .score-band {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .tab-nav { display: flex; margin-bottom: 36px; border-bottom: 1px solid var(--border); }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tab-btn:hover { color: var(--text-muted); }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .section-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal-accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--teal-border); }
+  .section { margin-bottom: 40px; }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .section-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+  .section-body { font-size: 13.5px; color: var(--text-muted); line-height: 1.75; max-width: 780px; }
+
+  .philosophy-block {
+    background: var(--navy-mid);
+    border: 1px solid var(--amber-border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .philosophy-block p { font-size: 14px; color: var(--text-primary); line-height: 1.8; margin-bottom: 14px; }
+  .philosophy-block p:last-child { margin-bottom: 0; }
+  .philosophy-block strong { color: var(--amber-light); font-weight: 600; }
+
+  .crm-capability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px; }
+
+  .capability-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .capability-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal-accent), transparent);
+  }
+
+  .capability-num { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-accent); margin-bottom: 8px; }
+  .capability-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .capability-body { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; }
+
+  .spdr-fit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
+
+  .spdr-fit-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .spdr-letter { font-size: 28px; font-weight: 800; color: var(--amber-light); line-height: 1; margin-bottom: 4px; }
+  .spdr-name { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+
+  .spdr-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+
+  .spdr-tag.primary { color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border); }
+  .spdr-tag.secondary { color: var(--teal-accent); background: var(--teal-dim); border: 1px solid var(--teal-border); }
+  .spdr-tag.neutral { color: var(--text-dim); background: rgba(255,255,255,0.04); border: 1px solid var(--border-light); }
+  .spdr-role { font-size: 11px; color: var(--text-muted); line-height: 1.5; text-align: left; }
+
+  .decision-block { background: var(--navy-mid); border: 1px solid var(--border); border-radius: 6px; padding: 28px; margin-bottom: 40px; }
+  .decision-block-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
+  .decision-reasons { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+  .decision-reason { display: flex; gap: 14px; align-items: flex-start; }
+
+  .reason-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  .reason-check svg { width: 10px; height: 10px; stroke: var(--amber); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .reason-text { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+  .reason-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .decision-caveat {
+    padding-top: 18px;
+    border-top: 1px solid var(--border-light);
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .decision-caveat strong { color: var(--text-muted); font-style: normal; font-weight: 600; }
+
+  /* ── TAB 2 ── */
+  .initiative-block { background: var(--navy-card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 20px; }
+
+  .initiative-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .initiative-pill {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 2px; flex-shrink: 0;
+    color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border);
+  }
+
+  .initiative-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .initiative-timing { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+  .initiative-body { padding: 20px; }
+  .initiative-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+  .initiative-desc strong { color: var(--text-primary); font-weight: 600; }
+  .meta-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+  .meta-tag {
+    font-size: 10px; font-weight: 500; color: var(--text-dim);
+    background: var(--navy-mid); border: 1px solid var(--border-light);
+    padding: 3px 10px; border-radius: 2px;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .meta-tag .tag-label { color: var(--text-muted); font-weight: 600; }
+  .step-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .step-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 14px;
+    background: var(--navy-mid); border: 1px solid var(--border-light); border-radius: 4px;
+  }
+
+  .step-num { font-size: 10px; font-weight: 700; color: var(--teal-accent); flex-shrink: 0; margin-top: 2px; width: 16px; }
+  .step-text { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+  .step-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .ai-eval-block {
+    background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 6px;
+    padding: 20px 24px; margin-bottom: 20px;
+  }
+
+  .ai-eval-label { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-accent); margin-bottom: 10px; }
+  .ai-eval-body { font-size: 13px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }
+  .ai-eval-body strong { color: var(--text-primary); font-weight: 600; }
+  .ai-eval-paths { display: flex; flex-direction: column; gap: 8px; }
+
+  .ai-path { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+  .ai-path-marker { font-size: 10px; font-weight: 700; color: var(--teal-accent); flex-shrink: 0; margin-top: 2px; width: 20px; }
+
+  .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+
+  .deliverable-item {
+    display: flex; gap: 12px; padding: 14px;
+    background: var(--navy-mid); border: 1px solid var(--border-light); border-radius: 4px;
+    align-items: flex-start;
+  }
+
+  .deliverable-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .deliverable-title { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .deliverable-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; }
+
+  .deliverable-tag {
+    display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--amber-light); background: var(--amber-dim); border: 1px solid var(--amber-border);
+    padding: 1px 6px; border-radius: 2px; margin-bottom: 4px;
+  }
+
+  /* ── TAB 3 ── */
+  .signal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+
+  .signal-card { background: var(--navy-card); border: 1px solid var(--border); border-radius: 6px; padding: 20px; }
+  .signal-card.positive { border-color: var(--teal-border); }
+  .signal-card.caution { border-color: var(--amber-border); }
+
+  .signal-label { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
+  .signal-label.positive { color: var(--teal-accent); }
+  .signal-label.caution { color: var(--amber-light); }
+  .signal-items { display: flex; flex-direction: column; gap: 8px; }
+
+  .signal-item {
+    font-size: 12.5px; color: var(--text-muted); line-height: 1.6;
+    padding-left: 14px; position: relative;
+  }
+
+  .signal-item::before {
+    content: ''; position: absolute; left: 0; top: 8px;
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+
+  .signal-card.positive .signal-item::before { background: var(--teal-accent); }
+  .signal-card.caution .signal-item::before { background: var(--amber); }
+  .signal-item strong { color: var(--text-primary); font-weight: 600; }
+
+  .change-mgmt-block {
+    background: var(--navy-card);
+    border: 1px solid var(--amber-border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 32px;
+  }
+
+  .change-mgmt-label { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-light); margin-bottom: 10px; }
+  .change-mgmt-body { font-size: 13px; color: var(--text-muted); line-height: 1.75; margin-bottom: 12px; }
+  .change-mgmt-body:last-child { margin-bottom: 0; }
+  .change-mgmt-body strong { color: var(--text-primary); font-weight: 600; }
+
+  .connections-block { background: var(--navy-mid); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 32px; }
+  .connections-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
+
+  .connection-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 14px 0; border-bottom: 1px solid var(--border-light);
+  }
+
+  .connection-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .connection-service {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    width: 80px; flex-shrink: 0; margin-top: 2px;
+  }
+
+  .connection-service.ai { color: var(--teal-accent); }
+  .connection-service.marketing { color: var(--amber-light); }
+  .connection-text { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; }
+  .connection-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .question-block {
+    background: var(--navy-mid); border: 1px solid var(--border); border-radius: 6px;
+    padding: 28px; margin-bottom: 40px; text-align: center;
+  }
+
+  .question-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-accent); margin-bottom: 14px; }
+
+  .question-text {
+    font-size: 16px; font-weight: 600; color: var(--text-primary); line-height: 1.5;
+    margin-bottom: 12px; max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+
+  .question-sub { font-size: 12.5px; color: var(--text-muted); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+
+  .disclaimer {
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+    font-size: 11px; color: var(--text-dim); line-height: 1.6; font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 24px 16px 40px; }
+    .page-header { flex-direction: column; gap: 20px; }
+    .spdr-score { text-align: left; margin-left: 0; }
+    .crm-capability-grid, .deliverables-grid, .signal-grid { grid-template-columns: 1fr; }
+    .spdr-fit-grid { grid-template-columns: repeat(2, 1fr); }
+    .tab-btn { padding: 10px 14px; font-size: 11px; }
+  }
+
+  @media print {
+    .tab-nav { display: none; }
+    .tab-panel { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="header-left">
+      <div class="eyebrow">PDL Engagement · CRM Strategy</div>
+      <h1 class="page-title">CRM Strategy<br><span class="crestline">Crestline Auto Group</span></h1>
+      <div class="meta-dots">
+        <span class="meta-dot">Independent Used Car Dealer</span>
+        <span class="meta-dot">Akron/Canton Metro</span>
+        <span class="meta-dot">April 2026</span>
+        <span class="meta-dot">14 Employees · $6.8M Revenue</span>
+      </div>
+    </div>
+    <div class="spdr-score">
+      <div class="score-label">SPDR Score</div>
+      <div class="score-value">52.2<span class="score-max">/100</span></div>
+      <div class="score-band">Developing</div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('crm-strategy', this)">CRM Strategy</button>
+    <button class="tab-btn" onclick="showTab('implementation', this)">Implementation Plan</button>
+    <button class="tab-btn" onclick="showTab('what-comes-next', this)">What Comes Next</button>
+  </div>
+
+  <!-- ═══ TAB 1: CRM STRATEGY ═══ -->
+  <div class="tab-panel active" id="tab-crm-strategy">
+
+    <div class="section-label">PDL Approach</div>
+    <div class="philosophy-block">
+      <p>CRM exists for one reason: to capture what you need to know about your customers and prospects so that relationships are built on information, not memory. Who they are, what they're looking for, where they are in the buying process, and whether they've done business with you before. That data is what lets you move deals through a pipeline with intention, keep in touch across the full customer lifecycle, and build the kind of marketing and follow-up that works because it's relevant. <strong>The tool is infrastructure. The capability is what matters.</strong></p>
+      <p>That's why PDL offers tool selection as a service. We evaluate what you may already have, what your process actually needs, and what the realistic switching costs look like before recommending anything. Sometimes the best answer is a standalone CRM. Sometimes it's already sitting inside the system you're paying for and not using. <strong>PDL also offers CRM rescue services for when things go wrong.</strong></p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">What CRM Actually Does</div>
+      <div class="section-body">CRM is less about software and more about capabilities. A functioning CRM gives you four things a growing business can't afford to leave to memory and instinct.</div>
+    </div>
+
+    <div class="crm-capability-grid">
+      <div class="capability-card">
+        <div class="capability-num">01</div>
+        <div class="capability-name">Lead Capture</div>
+        <div class="capability-body">Every inquiry (phone, web form, walk-in, marketplace) lands in one place with a timestamp. Nothing enters the business and quietly disappears.</div>
+      </div>
+      <div class="capability-card">
+        <div class="capability-num">02</div>
+        <div class="capability-name">Pipeline Visibility</div>
+        <div class="capability-body">At any moment, you can see where every active lead stands. Not in someone's head. Not in a spreadsheet. In a shared system with a defined stage for every deal.</div>
+      </div>
+      <div class="capability-card">
+        <div class="capability-num">03</div>
+        <div class="capability-name">Follow-Up Consistency</div>
+        <div class="capability-body">Follow-up happens on a schedule, not on instinct. The right message goes to the right person at the right time, without requiring someone to remember to do it.</div>
+      </div>
+      <div class="capability-card">
+        <div class="capability-num">04</div>
+        <div class="capability-name">Post-Sale Relationship</div>
+        <div class="capability-body">The relationship doesn't end at delivery. Post-sale touchpoints (satisfaction check-ins, service reminders, repeat buyer outreach) are systematized, not sporadic.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Systems Fit</div>
+      <div class="section-title">Where CRM Sits in the SPDR System</div>
+      <div class="section-subtitle">CRM touches all four systems and connects them.</div>
+    </div>
+
+    <div class="spdr-fit-grid">
+      <div class="spdr-fit-card">
+        <div class="spdr-letter">S</div>
+        <div class="spdr-name">Strategy</div>
+        <div class="spdr-tag primary">Enables</div>
+        <div class="spdr-role">CRM is where the business strategy becomes operational. Crestline's winning aspiration (most trusted dealer for working families, built on repeat buyers) only works if there's a system capturing who those families are, what they drove away in, and when to reach back out. Without it, the strategy depends on memory, disconnected notes, and spreadsheets that don't talk to each other.</div>
+      </div>
+      <div class="spdr-fit-card">
+        <div class="spdr-letter">P</div>
+        <div class="spdr-name">Processes</div>
+        <div class="spdr-tag primary">Primary</div>
+        <div class="spdr-role">CRM is the process system for the sales side of the business. Lead capture, pipeline stages, follow-up cadence, and post-sale touchpoints are process failures before they're CRM failures. Getting the workflow right in IDMS is the Phase 1 deliverable.</div>
+      </div>
+      <div class="spdr-fit-card">
+        <div class="spdr-letter">D</div>
+        <div class="spdr-name">Data</div>
+        <div class="spdr-tag secondary">Generates</div>
+        <div class="spdr-role">A functioning CRM creates the data that doesn't currently exist: source attribution, lead conversion rates, time-to-close, repeat buyer frequency. This is what feeds marketing decisions and eventually the AI buying filter. CRM is the upstream source.</div>
+      </div>
+      <div class="spdr-fit-card">
+        <div class="spdr-letter">R</div>
+        <div class="spdr-name">Resources</div>
+        <div class="spdr-tag neutral">Reinforcing</div>
+        <div class="spdr-role">CRM and the people using it make each other more effective. The system replaces scattered spreadsheets, notes, and individual inboxes with a single point of truth. The people bring the judgment, relationships, and context the system can't replicate. Together they support the repeat buyer strategy in a way neither can alone.</div>
+      </div>
+    </div>
+
+    <div class="decision-block">
+      <div class="decision-block-title">For Crestline: Why IDMS CRM</div>
+      <div class="decision-reasons">
+        <div class="decision-reason">
+          <div class="reason-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="reason-text"><strong>Already owned, already integrated.</strong> DealerSocket IDMS is the operational core of the business. Activating the CRM module adds capability without adding a new system. No data migration, no integration work, no parallel logins.</div>
+        </div>
+        <div class="decision-reason">
+          <div class="reason-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="reason-text"><strong>Lower learning curve.</strong> The team is already in IDMS for inventory and deal management. CRM in the same system means one workflow, one login, and habits that build on what's already familiar.</div>
+        </div>
+        <div class="decision-reason">
+          <div class="reason-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="reason-text"><strong>Floorplan exposure makes speed matter.</strong> Every day a lead goes unworked is a day a vehicle is sitting on floorplan. CRM activation reduces that gap and it's already paid for.</div>
+        </div>
+        <div class="decision-reason">
+          <div class="reason-check"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="reason-text"><strong>Foundation for AI and marketing.</strong> The data a functioning CRM generates (source attribution, conversion rates, follow-up cadence) feeds directly into the AI thought partner and marketing channels already in the roadmap.</div>
+        </div>
+      </div>
+      <div class="decision-caveat">
+        <strong>The honest caveat:</strong> IDMS CRM is the right starting point for Crestline. DealerSocket's parent company announced a significant AI investment in early 2026 (including AI-assisted call capture and automated CRM logging) but those features are not yet confirmed live. Phase 1 proceeds with IDMS CRM as configured today, with PDL evaluating AI feature availability during the engagement. At the Phase 1 review: if adoption is strong, stay the course. If adoption struggled and the AI features still aren't available, migration to a purpose-built platform becomes the recommendation. With a functioning process already running, that transition is significantly easier than starting from scratch.
+      </div>
+    </div>
+
+    <div class="disclaimer">All data in this assessment is synthetic, developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.</div>
+
+  </div><!-- /tab-crm-strategy -->
+
+
+  <!-- ═══ TAB 2: IMPLEMENTATION PLAN ═══ -->
+  <div class="tab-panel" id="tab-implementation">
+
+    <div class="section">
+      <div class="section-label">Phase 1 · Foundation</div>
+      <div class="section-title">Activate IDMS CRM — Lead Capture Through Post-Sale</div>
+      <div class="section-subtitle">Weeks 4–12 · Concurrent with Business Strategy Phase 1 and AI Pilot</div>
+    </div>
+
+    <div class="initiative-block">
+      <div class="initiative-header">
+        <div class="initiative-pill">Initiative 4</div>
+        <div class="initiative-name">Activate IDMS CRM — Lead Capture and Pipeline</div>
+        <div class="initiative-timing">Weeks 4–10</div>
+      </div>
+      <div class="initiative-body">
+        <div class="initiative-desc">Crestline's current lead-handling lives across phone logs, Gmail threads, and individual memory. <strong>The goal of Initiative 4 is to get every lead from every channel into a single structured pipeline with defined stages, timestamps, and an owner.</strong> This is the foundation everything else depends on. Nothing in Phase 2 is possible without a working pipeline.</div>
+        <div class="meta-tags">
+          <div class="meta-tag"><span class="tag-label">Owner:</span> Lead Coordinator + PDL</div>
+          <div class="meta-tag"><span class="tag-label">System:</span> DealerSocket IDMS CRM</div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span> Weeks 4–10</div>
+        </div>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-num">01</div>
+            <div class="step-text"><strong>Define contact and deal fields.</strong> Before anything else is configured, decide what information Crestline actually needs to capture. Contact fields come first: who the buyer is, how many drivers in the household, what they currently drive, budget range, and how they heard about Crestline. Deal fields follow: vehicle of interest, acquisition source, stage, and expected close. Getting this right at the start prevents the most common CRM problem: a system full of incomplete records that can't be used for anything.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">02</div>
+            <div class="step-text"><strong>Evaluate lead scoring capability.</strong> Lead scoring — prioritizing leads based on engagement signals, vehicle match, budget fit, and buying timeline — is a meaningful capability for a business handling volume across multiple channels. If IDMS supports it natively, configure it. If not, AI can fill that gap: a simple scoring model built on the fields defined in step 01 can surface which leads deserve immediate attention without requiring a purpose-built feature.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">03</div>
+            <div class="step-text"><strong>Configure pipeline stages.</strong> Define and build deal stages inside IDMS CRM that reflect how Crestline actually sells, from first inquiry through delivered. Stages should be specific enough to be actionable, not so granular they become a burden to maintain.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">04</div>
+            <div class="step-text"><strong>Map and connect all lead sources.</strong> AutoTrader, Facebook Marketplace, dealer website, walk-in, and inbound phone all need a defined path into the CRM. Every source gets a capture method and a default stage entry point.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">05</div>
+            <div class="step-text"><strong>Establish lead ownership and response protocol.</strong> Who owns a new lead the moment it enters the system. What the first response looks like. How quickly it needs to happen. These are process decisions, not technology decisions. IDMS enforces them once they're defined.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">06</div>
+            <div class="step-text"><strong>Train the team on daily CRM use.</strong> Training focuses on the daily workflow, not a feature tour. What does using the CRM look like from the time you arrive to the time you leave.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="initiative-block">
+      <div class="initiative-header">
+        <div class="initiative-pill">Initiative 5</div>
+        <div class="initiative-name">Configure Follow-Up and Post-Sale Workflows</div>
+        <div class="initiative-timing">Weeks 8–12</div>
+      </div>
+      <div class="initiative-body">
+        <div class="initiative-desc">A pipeline without follow-up is a list. <strong>Initiative 5 builds the workflows that make CRM a relationship system, not just a tracking tool.</strong> Automated follow-up cadences for active leads, post-sale touchpoints for delivered customers, and re-engagement sequences for past buyers are all configured inside IDMS and connected to the repeat buyer strategy.</div>
+        <div class="meta-tags">
+          <div class="meta-tag"><span class="tag-label">Owner:</span> Lead Coordinator + PDL</div>
+          <div class="meta-tag"><span class="tag-label">System:</span> DealerSocket IDMS CRM</div>
+          <div class="meta-tag"><span class="tag-label">Timing:</span> Weeks 8–12</div>
+        </div>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-num">01</div>
+            <div class="step-text"><strong>Build active lead follow-up sequences.</strong> Define the cadence (when, how, and what message) for leads at each pipeline stage. Channels include SMS, email, and phone. Frequency and tone should reflect Crestline's voice, not a generic dealership template.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">02</div>
+            <div class="step-text"><strong>Configure post-sale touchpoints.</strong> Satisfaction check-in at day 7. Service reminder at 90 days. Repeat buyer outreach at 18–24 months. These aren't marketing campaigns. They're relationship maintenance that compounds over time and directly supports the repeat buyer strategy.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">03</div>
+            <div class="step-text"><strong>Build a re-engagement sequence for past customers.</strong> Crestline has years of buyers in the market. A structured re-engagement workflow triggered by time since purchase and aligned to typical vehicle replacement cycles turns past customers into a pipeline asset rather than a dormant list.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-eval-block">
+      <div class="ai-eval-label">Phase 1 Evaluation · AI-Assisted Call Capture</div>
+      <div class="ai-eval-body">The most common objection to CRM adoption in sales isn't resistance to the tool. It's a legitimate tension: <strong>"Do you want me to sell or take notes?"</strong> That trade-off is real and it's why CRM adoption fails more often than CRM configuration does. If AI can eliminate the documentation burden without adding friction, it changes the starting position for adoption entirely.</div>
+      <div class="ai-eval-body">During Phase 1, PDL evaluates which path is viable for Crestline. DealerSocket has announced AI-assisted call capture on its roadmap, but availability in Crestline's tier is unconfirmed. If native features aren't live, a lightweight API-connected workflow can solve the same problem now. A transcription tool captures the call, an AI layer extracts the relevant fields, and an automation layer pushes the record directly into IDMS. Tools like Whisper for transcription and n8n or Zapier for automation are illustrative examples of what that workflow can look like. The salesperson sells. The system handles the rest.</div>
+      <div class="ai-eval-paths">
+        <div class="ai-path">
+          <div class="ai-path-marker">A →</div>
+          <div><strong style="color:var(--text-primary)">Wait for DealerSocket native AI.</strong> If the features ship during Phase 1 and are available in Crestline's tier, activate within IDMS. Lowest integration complexity.</div>
+        </div>
+        <div class="ai-path">
+          <div class="ai-path-marker">B →</div>
+          <div><strong style="color:var(--text-primary)">Build a lightweight API workflow.</strong> Transcription + AI extraction + automation layer connected to IDMS via API. Available now, independent of DealerSocket's roadmap.</div>
+        </div>
+        <div class="ai-path">
+          <div class="ai-path-marker">C →</div>
+          <div><strong style="color:var(--text-primary)">Factor into tool selection.</strong> If AI-assisted capture is critical to adoption success and neither path above is viable, this becomes a deciding factor in whether to stay on IDMS or migrate to a platform where it's already live, such as HubSpot.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">PDL Deliverables</div>
+    <div class="deliverables-grid">
+      <div class="deliverable-item">
+        <div class="deliverable-icon">📋</div>
+        <div>
+          <div class="deliverable-tag">Strategy</div>
+          <div class="deliverable-title">CRM Strategy Document</div>
+          <div class="deliverable-desc">Documented approach covering objectives, tool rationale, pipeline design, and how CRM connects to the business strategy and repeat buyer goal.</div>
+        </div>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-icon">⚙️</div>
+        <div>
+          <div class="deliverable-tag">Governance</div>
+          <div class="deliverable-title">CRM Governance Guidelines</div>
+          <div class="deliverable-desc">Defines data standards, field requirements, ownership rules, and what good CRM hygiene looks like on a daily and weekly basis.</div>
+        </div>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-icon">✅</div>
+        <div>
+          <div class="deliverable-tag">Process</div>
+          <div class="deliverable-title">Best Practices &amp; SOPs</div>
+          <div class="deliverable-desc">Step-by-step documentation for how to use the CRM across the key workflows: lead intake, follow-up, post-sale, and re-engagement.</div>
+        </div>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-icon">📊</div>
+        <div>
+          <div class="deliverable-tag">Metrics</div>
+          <div class="deliverable-title">Key Metrics &amp; KPI Framework</div>
+          <div class="deliverable-desc">Defined metrics tied to outcomes, not just activity. Lead response time, pipeline conversion rate, repeat buyer rate, and follow-up completion with context for what each number means for the business.</div>
+        </div>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-icon">🎓</div>
+        <div>
+          <div class="deliverable-tag">Training</div>
+          <div class="deliverable-title">Training Documentation</div>
+          <div class="deliverable-desc">Role-specific training materials for daily CRM use. Designed to onboard new team members and reinforce habits for existing ones.</div>
+        </div>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-icon">🔗</div>
+        <div>
+          <div class="deliverable-tag">Connected</div>
+          <div class="deliverable-title">NotebookLM Integration</div>
+          <div class="deliverable-desc">CRM documentation, SOPs, and best practices loaded into the shared NotebookLM hub alongside AI engagement materials. One reference point for the full team.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">All data in this assessment is synthetic, developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.</div>
+
+  </div><!-- /tab-implementation -->
+
+  <!-- ═══ TAB 3: WHAT COMES NEXT ═══ -->
+  <div class="tab-panel" id="tab-what-comes-next">
+
+    <div class="section">
+      <div class="section-label">After Phase 1</div>
+      <div class="section-title">What Phase 1 Answers</div>
+      <div class="section-subtitle">CRM Phase 1 has one job: prove that the capability is real and being used. Everything else follows from that.</div>
+    </div>
+
+    <div class="signal-grid">
+      <div class="signal-card positive">
+        <div class="signal-label positive">Phase 1 Working</div>
+        <div class="signal-items">
+          <div class="signal-item">Every lead channel has a path into the pipeline. Nothing is entering the business and disappearing.</div>
+          <div class="signal-item">The team is logging activity consistently without being reminded. The habit has formed.</div>
+          <div class="signal-item">Follow-up is happening on schedule, not on instinct. Response time has measurably improved.</div>
+          <div class="signal-item">Post-sale touchpoints are running. Past customers are being contacted systematically for the first time.</div>
+          <div class="signal-item">Source attribution data exists. Crestline knows where buyers are coming from.</div>
+        </div>
+      </div>
+      <div class="signal-card caution">
+        <div class="signal-label caution">Phase 1 Struggling</div>
+        <div class="signal-items">
+          <div class="signal-item">Leads are still being tracked outside the CRM. Gmail threads and spreadsheets haven't disappeared.</div>
+          <div class="signal-item">Activity logging is inconsistent. Some team members are using it, others aren't.</div>
+          <div class="signal-item">Follow-up is still driven by whoever remembers. The workflow isn't running without prompting.</div>
+          <div class="signal-item">The pipeline data doesn't reflect what's actually happening in the business.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="change-mgmt-block">
+      <div class="change-mgmt-label">The Real Variable: Adoption</div>
+      <div class="change-mgmt-body">McKinsey, IBM, and Harvard Business Review all cite failure rates for change initiatives in the range of 60–70%. The specific numbers are debated. The research behind them is largely practitioner observation, not controlled studies. But the underlying pattern is consistent across two decades of data: <strong>most technology implementations fail not because the tool doesn't work, but because the people using it don't change how they work.</strong> CRM has one of the worst adoption records in enterprise software. The reason is almost always the same: it was configured for leaders and handed to teams.</div>
+      <div class="change-mgmt-body">The most reliable finding across independent research isn't a methodology. It's an ownership gap. Studies consistently show that <strong>leaders believe they're involving their teams in change decisions far more than team members actually experience.</strong> People adopt what they helped build. They comply with what was decided for them, and compliance isn't adoption. This is why PDL's approach to both CRM and AI involves the team deliberately, from tool selection through workflow design. It's not a philosophy. It's what the data says works. That said, change management is mitigation, not prevention. PDL can improve the conditions for adoption significantly. It can't guarantee it. No one can.</div>
+      <div class="change-mgmt-body">Where AI changes the equation: if call capture and CRM logging happen automatically through a transcription workflow or native AI features, the documentation burden that drives the classic sales objection disappears before adoption even has a chance to fail. That's not a feature consideration. It's a change management strategy built into the infrastructure from the start.</div>
+    </div>
+
+    <div class="section-label">System Connections</div>
+    <div class="connections-block">
+      <div class="connections-title">What a Working CRM Unlocks Across the System</div>
+      <div class="connection-item">
+        <div class="connection-service ai">AI</div>
+        <div class="connection-text">The AI thought partner pilot runs concurrent with CRM Phase 1. A functioning CRM is what gives the AI pilot something real to work with: <strong>customer data, lead patterns, and follow-up history.</strong> As the CRM matures, AI moves from general thought partner to a tool that can interpret pipeline trends, flag stalled deals, and inform buying decisions. The two engagements reinforce each other. A struggling CRM limits what the AI pilot can do. A strong CRM accelerates it.</div>
+      </div>
+      <div class="connection-item">
+        <div class="connection-service marketing">Marketing</div>
+        <div class="connection-text">The marketing strategy identified email and SMS as retention channels. Retention marketing only works if you know who to reach, when, and with what. <strong>CRM is the source of that data.</strong> Source attribution from the CRM tells Crestline which channels are producing buyers worth retaining. Post-sale workflows in the CRM feed directly into the marketing cadences. Without CRM, marketing is broadcasting. With it, marketing is targeted.</div>
+      </div>
+      <div class="connection-item">
+        <div class="connection-service" style="color:#7eb8d4;">Data</div>
+        <div class="connection-text">CRM is the single point of truth for customer data. IDMS handles inventory and deals. QuickBooks handles accounting. <strong>None of them talk to each other by default, and that's exactly where CRM will surface its own ceiling.</strong> As lead data, marketing attribution, and financial performance accumulate across separate systems, the appetite to connect them grows. The Data engagement starts with an audit: what does IDMS reporting actually cover, where are the gaps, and what would a centralized data system make possible. Forecasting, bidirectional marketing sync, and financial and sales analysis all require connecting sources no single platform can see on its own. The audit determines the scope. The CRM makes the case.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Phase 2 · Amplification</div>
+      <div class="section-title">Phase 2 Only Proceeds If the Foundation Is There</div>
+      <div class="section-subtitle">You only get out of CRM what you put in. Phase 2 is not a calendar decision.</div>
+    </div>
+
+    <div class="initiative-block">
+      <div class="initiative-header">
+        <div class="initiative-pill" style="color:var(--teal-accent);background:var(--teal-dim);border-color:var(--teal-border);">Phase 2 Triggers</div>
+        <div class="initiative-name">What Has to Be True Before Phase 2 Begins</div>
+      </div>
+      <div class="initiative-body">
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-num" style="color:var(--teal-accent);">→</div>
+            <div class="step-text">The pipeline is live and being used consistently by the full team, not just the people who were already bought in.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num" style="color:var(--teal-accent);">→</div>
+            <div class="step-text">Source attribution data exists and is reliable. Crestline knows where leads are coming from and which sources are converting.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num" style="color:var(--teal-accent);">→</div>
+            <div class="step-text">Follow-up workflows are running without manual prompting. The process is systematic, not person-dependent.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num" style="color:var(--teal-accent);">→</div>
+            <div class="step-text">At least one post-sale touchpoint sequence has completed a full cycle and produced measurable repeat buyer or referral activity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-eyebrow">The Question PDL Asks at the End of Phase 1</div>
+      <div class="question-text">Did CRM actually help Crestline? And if the answer is yes, what does Phase 2 look like?</div>
+      <div class="question-sub">If the answer is yes, the next conversation is about amplification: deeper AI integration, Lindy voice agent, and marketing attribution. If the answer is no, the conversation is about what got in the way, whether it was the tool, the process, or the people. That review happens before anything else moves forward.</div>
+    </div>
+
+    <div class="disclaimer">All data in this assessment is synthetic, developed from real-world patterns and industry research to illustrate how PDL engagements work. All real client data is private and confidential.</div>
+
+  </div><!-- /tab-what-comes-next -->
+
+</div><!-- /container -->
+
+<script>
+  function showTab(tabId, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
